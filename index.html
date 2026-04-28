@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 游戏预约榜监控仪表盘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+        * {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .game-card:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .game-card.taptap {
+            border-left-color: #00D632;
+        }
+
+        .game-card.bilibili {
+            border-left-color: #FB7299;
+        }
+
+        .rank-badge {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .rank-top3 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+        }
+
+        .rank-normal {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+        }
+
+        .platform-taptap {
+            background: linear-gradient(135deg, #00D632, #00A825);
+        }
+
+        .platform-bilibili {
+            background: linear-gradient(135deg, #FB7299, #E84A6F);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .new-badge {
+            background: linear-gradient(135deg, #FF6B6B, #FF4757);
+            animation: pulse 1.5s infinite;
+        }
+
+        .soar-badge {
+            background: linear-gradient(135deg, #FFA500, #FF6B00);
+            animation: pulse 1.5s infinite;
+        }
+
+        .section-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .new-game-card {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 71, 87, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .new-game-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
+        }
+
+        .soar-game-card {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.15), rgba(255, 107, 0, 0.1));
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .soar-game-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.2);
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Header -->
+    <header class="glass-card sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        🎮 游戏预约榜监控仪表盘
+                    </h1>
+                    <p class="text-gray-400 text-sm mt-1" id="updateTime">数据更新时间：加载中...</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="switchView('overview')" class="tab-btn active px-4 py-2 rounded-lg text-sm font-medium" data-view="overview">
+                        📊 全平台概览
+                    </button>
+                    <button onclick="switchView('taptap')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium" data-view="taptap">
+                        📱 TapTap
+                    </button>
+                    <button onclick="switchView('bilibili')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium" data-view="bilibili">
+                        📺 Bilibili
+                    </button>
+                    <button onclick="switchView('comparison')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium" data-view="comparison">
+                        📈 对比分析
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="stat-card rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-green-400" id="taptapCount">--</div>
+                <div class="text-gray-400 text-sm">TapTap 监测游戏</div>
+            </div>
+            <div class="stat-card rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-pink-400" id="bilibiliCount">--</div>
+                <div class="text-gray-400 text-sm">Bilibili 监测游戏</div>
+            </div>
+            <div class="stat-card rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-red-400" id="newCount">--</div>
+                <div class="text-gray-400 text-sm">新上榜产品</div>
+            </div>
+            <div class="stat-card rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-orange-400" id="soarCount">--</div>
+                <div class="text-gray-400 text-sm">排名飙升 (≥10位)</div>
+            </div>
+        </div>
+
+        <!-- 新上榜产品专区 -->
+        <section class="section-card p-6 mb-8" id="newGamesSection">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="new-badge px-3 py-1 rounded-full text-sm font-bold">🆕 新上榜</span>
+                <h2 class="text-xl font-bold">今日新上榜产品</h2>
+                <span class="text-gray-400 text-sm">（含TapTap链接，点击查看详情）</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="newGamesGrid">
+                <!-- 新上榜产品将通过JavaScript动态插入 -->
+            </div>
+        </section>
+
+        <!-- 排名飙升专区 -->
+        <section class="section-card p-6 mb-8" id="soarGamesSection">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="soar-badge px-3 py-1 rounded-full text-sm font-bold">🔥 排名飙升</span>
+                <h2 class="text-xl font-bold">排名大幅上升游戏</h2>
+                <span class="text-gray-400 text-sm">（上升 ≥10 位）</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left text-gray-400 border-b border-gray-700">
+                            <th class="pb-3 pr-4">排名变化</th>
+                            <th class="pb-3 pr-4">游戏名</th>
+                            <th class="pb-3 pr-4">评分</th>
+                            <th class="pb-3 pr-4">预约数</th>
+                            <th class="pb-3">游戏类型</th>
+                        </tr>
+                    </thead>
+                    <tbody id="soarGamesTable">
+                        <!-- 飙升游戏将通过JavaScript动态插入 -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bilibili 特有榜单 -->
+        <section class="section-card p-6 mb-8" id="bilibiliPublisherSection">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="platform-bilibili px-3 py-1 rounded-full text-sm font-bold">📺 B站专区</span>
+                <h2 class="text-xl font-bold">Bilibili 预约榜 - 按厂商分类</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="bilibiliPublisherGrid">
+                <!-- 厂商分类将通过JavaScript动态插入 -->
+            </div>
+        </section>
+
+        <!-- Rank Lists -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- TapTap Rank -->
+            <section class="section-card p-6" id="taptapSection">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <span class="platform-taptap px-3 py-1 rounded-full text-sm font-bold">📱 TapTap</span>
+                        <h2 class="text-xl font-bold">预约榜 Top 30</h2>
+                    </div>
+                </div>
+                <div class="max-h-[600px] overflow-y-auto scrollbar-hide space-y-2" id="taptapList">
+                    <!-- TapTap列表将通过JavaScript动态插入 -->
+                </div>
+            </section>
+
+            <!-- Bilibili Rank -->
+            <section class="section-card p-6" id="bilibiliSection">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <span class="platform-bilibili px-3 py-1 rounded-full text-sm font-bold">📺 Bilibili</span>
+                        <h2 class="text-xl font-bold">预约榜 Top 30</h2>
+                    </div>
+                </div>
+                <div class="max-h-[600px] overflow-y-auto scrollbar-hide space-y-2" id="bilibiliList">
+                    <!-- Bilibili列表将通过JavaScript动态插入 -->
+                </div>
+            </section>
+        </div>
+
+        <!-- 对比分析 -->
+        <section class="section-card p-6 mt-8 hidden" id="comparisonSection">
+            <div class="flex items-center gap-3 mb-6">
+                <h2 class="text-xl font-bold">📈 双平台排名对比</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left text-gray-400 border-b border-gray-700">
+                            <th class="pb-3 pr-4">游戏名</th>
+                            <th class="pb-3 pr-4 text-green-400">TapTap排名</th>
+                            <th class="pb-3 pr-4 text-pink-400">Bilibili排名</th>
+                            <th class="pb-3">差异分析</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonTable">
+                        <!-- 对比数据将通过JavaScript动态插入 -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-card mt-12 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>🎮 游戏预约榜监控仪表盘 | 数据每日自动更新</p>
+            <p class="text-sm mt-2">监控平台：TapTap · Bilibili</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // 完整数据（2026-04-28）
+        // ==========================================
+        const gameData = {
+            "update_time": "2026-04-28 11:49:39",
+            "date": "2026-04-28",
+            
+            // TapTap榜单
+            "taptap": [
+                {"rank": 1, "name": "王者万象棋", "score": 7.3, "reservations": "66.4万", "type": "策略对战/自走棋", "link": "https://www.taptap.cn/app/243110"},
+                {"rank": 2, "name": "无限大", "score": 8.1, "reservations": "317.7万", "type": "开放世界/二次元", "link": "https://www.taptap.cn/app/208171"},
+                {"rank": 3, "name": "集合！浆果镇", "score": 9.1, "reservations": "3.1万", "type": "模拟经营/休闲", "link": "https://www.taptap.cn/app/277434"},
+                {"rank": 4, "name": "归环", "score": 8.1, "reservations": "66万", "type": "RPG/冒险", "link": "https://www.taptap.cn/app/269574"},
+                {"rank": 5, "name": "白银之城", "score": 8.7, "reservations": "85.3万", "type": "策略/生存", "link": "https://www.taptap.cn/app/267847"},
+                {"rank": 6, "name": "夜幕之下", "score": 9.1, "reservations": "149.1万", "type": "角色扮演/剧情", "link": "https://www.taptap.cn/app/283037"},
+                {"rank": 7, "name": "星布谷地", "score": 8.0, "reservations": "89.3万", "type": "模拟经营/治愈", "link": "https://www.taptap.cn/app/181582"},
+                {"rank": 8, "name": "怪物猎人：旅人", "score": 7.4, "reservations": "43万", "type": "动作狩猎", "link": "https://www.taptap.cn/app/297657"},
+                {"rank": 9, "name": "望月", "score": 8.8, "reservations": "218.9万", "type": "二次元/冒险", "link": "https://www.taptap.cn/app/179637"},
+                {"rank": 10, "name": "来自黑洞的旅人", "score": 8.4, "reservations": "5.1万", "type": "冒险/解谜", "link": "https://www.taptap.cn/app/289310"},
+                {"rank": 11, "name": "吞噬星空", "score": 7.8, "reservations": "1.2万", "type": "科幻/动作", "link": "https://www.taptap.cn/app/296650"},
+                {"rank": 12, "name": "宗师之上", "score": 9.2, "reservations": "5.3万", "type": "武侠/动作", "link": "https://www.taptap.cn/app/276853"},
+                {"rank": 13, "name": "东离剑游纪", "score": 9.0, "reservations": "12万", "type": "武侠/角色扮演", "link": "https://www.taptap.cn/app/293564"},
+                {"rank": 14, "name": "代号：神不言", "score": 9.0, "reservations": "2.2万", "type": "恋爱互动/UE5", "link": "https://www.taptap.cn/app/849146"},
+                {"rank": 15, "name": "代号：深渊之歌", "score": 8.9, "reservations": "9.9万", "type": "冒险/剧情", "link": "https://www.taptap.cn/app/285660"},
+                {"rank": 16, "name": "大道仙途", "score": 8.3, "reservations": "6.8万", "type": "修仙/角色扮演", "link": "https://www.taptap.cn/app/288610"},
+                {"rank": 17, "name": "心跳陷落", "score": 7.0, "reservations": "23.7万", "type": "乙女/恋爱", "link": "https://www.taptap.cn/app/277438"},
+                {"rank": 18, "name": "崩坏：因缘精灵", "score": 8.1, "reservations": "172.8万", "type": "二次元/动作", "link": "https://www.taptap.cn/app/292979"},
+                {"rank": 19, "name": "卡厄思梦境", "score": 8.2, "reservations": "63.7万", "type": "冒险/解谜", "link": "https://www.taptap.cn/app/268600"},
+                {"rank": 20, "name": "生计与沉冤", "score": 9.3, "reservations": "4,368", "type": "悬疑/文字解谜", "link": "https://www.taptap.cn/app/285663"},
+                {"rank": 21, "name": "龙岛异兽起源", "score": 8.9, "reservations": "120.7万", "type": "冒险/生存", "link": "https://www.taptap.cn/app/294040"},
+                {"rank": 22, "name": "愤怒的小鸟：经典归来", "score": 8.2, "reservations": "26.8万", "type": "休闲/益智", "link": "https://www.taptap.cn/app/291650"},
+                {"rank": 23, "name": "竞拍之王", "score": 8.7, "reservations": "4.9万", "type": "策略/模拟", "link": "https://www.taptap.cn/app/288612"},
+                {"rank": 24, "name": "诡秘之主", "score": 8.5, "reservations": "28.6万", "type": "角色扮演/策略", "link": "https://www.taptap.cn/app/293566"},
+                {"rank": 25, "name": "蓝色星原：旅谣", "score": 8.4, "reservations": "56.9万", "type": "二次元/冒险", "link": "https://www.taptap.cn/app/181576"}
+            ],
+
+            // Bilibili榜单
+            "bilibili": [
+                {"rank": 4, "name": "望月", "publisher": "望月游戏研究院", "type": "二次元/冒险"},
+                {"rank": 5, "name": "闪耀吧！噜咪", "publisher": "上海幻电信息科技有限公司", "type": "休闲/养成"},
+                {"rank": 6, "name": "怪物猎人：旅人", "publisher": "腾讯", "type": "动作狩猎"},
+                {"rank": 7, "name": "绿梦：时空之声", "publisher": "上海竹子互联网信息服务有限公司", "type": "音游/剧情"},
+                {"rank": 8, "name": "星布谷地", "publisher": "米哈游", "type": "模拟经营/治愈"},
+                {"rank": 9, "name": "蓝色星原：旅谣", "publisher": "芒啾网络", "type": "二次元/冒险"},
+                {"rank": 10, "name": "三国志：王道天下", "publisher": "上海幻电信息科技有限公司", "type": "策略/三国"},
+                {"rank": 11, "name": "饥困荒野", "publisher": "猪人工作室", "type": "生存/模拟"},
+                {"rank": 12, "name": "诡秘之主", "publisher": "弹指宇宙", "type": "角色扮演/策略"},
+                {"rank": 13, "name": "芙娅之魂", "publisher": "方尖碑工作室", "type": "冒险/解谜"},
+                {"rank": 14, "name": "虚环", "publisher": "腾讯", "type": "动作/角色扮演"},
+                {"rank": 15, "name": "七界梦谭", "publisher": "紫龙游戏", "type": "角色扮演/仙侠"},
+                {"rank": 16, "name": "集合！浆果镇", "publisher": "朝夕光年", "type": "模拟经营/休闲"},
+                {"rank": 18, "name": "代号：深渊之歌", "publisher": "淘气泡游戏", "type": "冒险/剧情"},
+                {"rank": 19, "name": "盛世天下：女帝篇", "publisher": "腾讯", "type": "角色扮演/宫斗"},
+                {"rank": 20, "name": "苍蓝避风港", "publisher": "幻萌网络", "type": "养成/放置"},
+                {"rank": 21, "name": "哀鸿：城破十日记", "publisher": "零创游戏", "type": "剧情/历史"},
+                {"rank": 22, "name": "Apex英雄", "publisher": "EA", "type": "射击/竞技"},
+                {"rank": 23, "name": "异人之下", "publisher": "腾讯", "type": "动作/漫改"},
+                {"rank": 24, "name": "卡厄思梦境", "publisher": "腾讯", "type": "冒险/解谜"},
+                {"rank": 25, "name": "元夜十二谈", "publisher": "上海游卡", "type": "策略/卡牌"},
+                {"rank": 26, "name": "夜幕之下", "publisher": "聚娱网络", "type": "角色扮演/剧情"},
+                {"rank": 27, "name": "镇魂街王者归来", "publisher": "上海游碧曜", "type": "动作/漫改"},
+                {"rank": 28, "name": "愤怒的小鸟：经典归来", "publisher": "成都金山世游卓立科技有限公司", "type": "休闲/益智"},
+                {"rank": 29, "name": "光阴之外", "publisher": "上海宾麒", "type": "角色扮演/仙侠"}
+            ],
+
+            // 新上榜产品（今日新增）
+            "new_games": [
+                {"rank": 147, "name": "失落城堡2", "score": 8.7, "reservations": "44.9万", "type": "Roguelike/动作", "link": "https://www.taptap.cn/app/711779", "highlight": "Steam移植标杆续作"},
+                {"rank": 143, "name": "牧场气息", "score": 8.6, "reservations": "13.6万", "type": "模拟经营/种田", "link": "https://www.taptap.cn/app/221775", "highlight": "治愈系牧场模拟"},
+                {"rank": 102, "name": "谍：惊蛰", "score": 9.5, "reservations": "7.9万", "type": "悬疑/文字解谜", "link": "https://www.taptap.cn/app/166757", "highlight": "9.5分超高评分"},
+                {"rank": 113, "name": "猫咪和汤：魔法与美食", "score": 9.0, "reservations": "5.3万", "type": "放置/模拟经营", "link": "https://www.taptap.cn/app/757799", "highlight": "韩系治愈IP续作"},
+                {"rank": 117, "name": "芯片大亨", "score": 8.7, "reservations": "2.7万", "type": "模拟经营/放置", "link": "https://www.taptap.cn/app/799682", "highlight": "新晋独立游戏"},
+                {"rank": 128, "name": "海兽餐厅", "score": 8.4, "reservations": "4.7万", "type": "模拟经营/治愈", "link": "https://www.taptap.cn/app/732739", "highlight": "极地海边梦幻餐厅"},
+                {"rank": 119, "name": "叫我大酋长", "score": 8.0, "reservations": "7,212", "type": "角色收集/放置", "link": "https://www.taptap.cn/app/787361", "highlight": "今日正式上线！"},
+                {"rank": 59, "name": "开派大祖师", "score": 10, "reservations": "5,120", "type": "国风/修仙", "link": "https://www.taptap.cn/app/814642", "highlight": "国风修仙放置"},
+                {"rank": 88, "name": "天选之子", "score": 0, "reservations": "344", "type": "待查", "link": "https://www.taptap.cn/app/843250", "highlight": "数据待验证"},
+                {"rank": 93, "name": "代号：神不言", "score": 9.0, "reservations": "2,219", "type": "UE5/恋爱互动", "link": "https://www.taptap.cn/app/849146", "highlight": "UE5引擎打造"},
+                {"rank": 114, "name": "我嘎嘎乱杀", "score": 10, "reservations": "341", "type": "休闲娱乐", "link": "https://www.taptap.cn/app/784628", "highlight": "休闲娱乐新选择"},
+                {"rank": 150, "name": "东煌纪", "score": 8.0, "reservations": "1,089", "type": "捉宠/冒险", "link": "https://www.taptap.cn/app/813889", "highlight": "灵兽收集冒险"}
+            ],
+
+            // 排名飙升（今日上升≥10位）
+            "soar_games": [
+                {"name": "这是谐音梗", "from": 84, "to": 31, "change": 53, "score": 9.4, "reservations": "6.4万", "type": "休闲/益智"},
+                {"name": "吸血鬼爬行者", "from": 113, "to": 68, "change": 45, "score": 10, "reservations": "1,324", "type": "Roguelike"},
+                {"name": "善良都市", "from": 104, "to": 69, "change": 35, "score": 8.6, "reservations": "4.9万", "type": "模拟经营"},
+                {"name": "地牢猎手6", "from": 137, "to": 103, "change": 34, "score": 7.2, "reservations": "2.8万", "type": "动作/RPG"},
+                {"name": "我在废土当主播", "from": 128, "to": 98, "change": 30, "score": 9.7, "reservations": "362", "type": "冒险/生存"},
+                {"name": "雪松", "from": 148, "to": 120, "change": 28, "score": 6.8, "reservations": "19.3万", "type": "冒险/解谜"},
+                {"name": "爱与机器人维修技术", "from": 112, "to": 85, "change": 27, "score": 9.9, "reservations": "5.9万", "type": "文字/剧情"},
+                {"name": "纵江湖", "from": 142, "to": 115, "change": 27, "score": 9.9, "reservations": "795", "type": "武侠/动作"},
+                {"name": "生计与沉冤", "from": 46, "to": 20, "change": 26, "score": 9.3, "reservations": "4,368", "type": "悬疑/文字解谜"},
+                {"name": "口袋吉伊卡哇", "from": 106, "to": 83, "change": 23, "score": 9.2, "reservations": "210.7万", "type": "休闲/养成"}
+            ],
+
+            "total_taptap": 82,
+            "total_bilibili": 32,
+            "total_new": 12,
+            "total_soar": 10
+        };
+
+        // ==========================================
+        // 渲染函数
+        // ==========================================
+        
+        // 更新时间
+        document.getElementById('updateTime').textContent = `数据更新时间：${gameData.update_time}`;
+        
+        // 统计数据
+        document.getElementById('taptapCount').textContent = gameData.total_taptap;
+        document.getElementById('bilibiliCount').textContent = gameData.total_bilibili;
+        document.getElementById('newCount').textContent = gameData.total_new;
+        document.getElementById('soarCount').textContent = gameData.total_soar;
+
+        // 渲染新上榜产品
+        function renderNewGames() {
+            const grid = document.getElementById('newGamesGrid');
+            grid.innerHTML = gameData.new_games.map(game => `
+                <a href="${game.link}" target="_blank" class="new-game-card p-4 block">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="new-badge px-2 py-0.5 rounded text-xs font-bold">NEW</span>
+                            <span class="text-gray-500 text-sm">#${game.rank}</span>
+                        </div>
+                        <span class="text-yellow-400 text-sm">⭐ ${game.score > 0 ? game.score : '?'}</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">${game.name}</h3>
+                    <p class="text-gray-400 text-sm mb-2">${game.highlight}</p>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-gray-500">📥 ${game.reservations}</span>
+                        <span class="text-gray-400">${game.type}</span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // 渲染飙升排名
+        function renderSoarGames() {
+            const tbody = document.getElementById('soarGamesTable');
+            tbody.innerHTML = gameData.soar_games.map(game => `
+                <tr class="border-b border-gray-800 hover:bg-white/5">
+                    <td class="py-3 pr-4">
+                        <span class="soar-badge px-2 py-1 rounded text-sm font-bold">
+                            ⬆️ ${game.from} → #${game.to}
+                        </span>
+                        <span class="text-orange-400 text-sm ml-2">+${game.change}位</span>
+                    </td>
+                    <td class="py-3 pr-4 font-medium">${game.name}</td>
+                    <td class="py-3 pr-4 text-yellow-400">⭐ ${game.score}</td>
+                    <td class="py-3 pr-4 text-gray-400">${game.reservations}</td>
+                    <td class="py-3 text-gray-500 text-sm">${game.type}</td>
+                </tr>
+            `).join('');
+        }
+
+        // 渲染TapTap榜单
+        function renderTaptapList() {
+            const list = document.getElementById('taptapList');
+            list.innerHTML = gameData.taptap.map(game => `
+                <div class="game-card taptap glass-card rounded-lg p-3 flex items-center gap-4">
+                    <div class="rank-badge ${game.rank <= 3 ? 'rank-top3' : 'rank-normal'}">
+                        ${game.rank}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <a href="${game.link}" target="_blank" class="font-medium hover:text-green-400 truncate">${game.name}</a>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs text-gray-400 mt-1">
+                            <span>📥 ${game.reservations}</span>
+                            <span>⭐ ${game.score}</span>
+                            <span>${game.type}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染Bilibili榜单
+        function renderBilibiliList() {
+            const list = document.getElementById('bilibiliList');
+            list.innerHTML = gameData.bilibili.map(game => `
+                <div class="game-card bilibili glass-card rounded-lg p-3 flex items-center gap-4">
+                    <div class="rank-badge ${game.rank <= 3 ? 'rank-top3' : 'rank-normal'}">
+                        ${game.rank}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-medium truncate">${game.name}</div>
+                        <div class="flex items-center gap-3 text-xs text-gray-400 mt-1">
+                            <span>🏢 ${game.publisher}</span>
+                            <span>${game.type}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染厂商分类
+        function renderPublisherGrid() {
+            const grid = document.getElementById('bilibiliPublisherGrid');
+            const publishers = {};
+            gameData.bilibili.forEach(game => {
+                if (!publishers[game.publisher]) {
+                    publishers[game.publisher] = [];
+                }
+                publishers[game.publisher].push(game);
+            });
+
+            const publisherCards = Object.entries(publishers)
+                .sort((a, b) => Math.min(...a[1].map(g => g.rank)) - Math.min(...b[1].map(g => g.rank)))
+                .slice(0, 6);
+
+            grid.innerHTML = publisherCards.map(([pub, games]) => `
+                <div class="glass-card rounded-lg p-4">
+                    <h4 class="font-medium text-sm mb-3 text-pink-400">🏢 ${pub}</h4>
+                    <div class="space-y-2">
+                        ${games.map(g => `
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="truncate">${g.name}</span>
+                                <span class="text-gray-500 ml-2">#${g.rank}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染对比分析
+        function renderComparison() {
+            const table = document.getElementById('comparisonTable');
+            const commonGames = {};
+
+            // 找出两平台都有的游戏
+            gameData.taptap.forEach(g => commonGames[g.name] = { taptap: g });
+            gameData.bilibili.forEach(g => {
+                if (commonGames[g.name]) {
+                    commonGames[g.name].bilibili = g;
+                }
+            });
+
+            const comparisons = Object.entries(commonGames)
+                .filter(([_, data]) => data.taptap && data.bilibili)
+                .map(([name, data]) => ({
+                    name,
+                    taptap: data.taptap.rank,
+                    bilibili: data.bilibili.rank,
+                    diff: data.taptap.rank - data.bilibili.rank
+                }))
+                .sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff))
+                .slice(0, 15);
+
+            table.innerHTML = comparisons.map(c => `
+                <tr class="border-b border-gray-800 hover:bg-white/5">
+                    <td class="py-3 pr-4 font-medium">${c.name}</td>
+                    <td class="py-3 pr-4 text-green-400 font-bold">#${c.taptap}</td>
+                    <td class="py-3 pr-4 text-pink-400 font-bold">#${c.bilibili}</td>
+                    <td class="py-3">
+                        ${c.diff > 0 ? `<span class="text-green-400">⬆️ TapTap高${c.diff}位</span>` : 
+                          c.diff < 0 ? `<span class="text-pink-400">⬆️ B站高${-c.diff}位</span>` : 
+                          '<span class="text-gray-400">= 两平台持平</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // 视图切换
+        function switchView(view) {
+            // 更新按钮状态
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.view === view) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 控制各区块显示
+            const sections = ['taptapSection', 'bilibiliSection', 'comparisonSection', 'newGamesSection', 'soarGamesSection', 'bilibiliPublisherSection'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('hidden');
+                }
+            });
+
+            switch(view) {
+                case 'overview':
+                    document.getElementById('taptapSection').classList.remove('hidden');
+                    document.getElementById('bilibiliSection').classList.remove('hidden');
+                    document.getElementById('newGamesSection').classList.remove('hidden');
+                    document.getElementById('soarGamesSection').classList.remove('hidden');
+                    break;
+                case 'taptap':
+                    document.getElementById('taptapSection').classList.remove('hidden');
+                    break;
+                case 'bilibili':
+                    document.getElementById('bilibiliSection').classList.remove('hidden');
+                    document.getElementById('bilibiliPublisherSection').classList.remove('hidden');
+                    break;
+                case 'comparison':
+                    document.getElementById('comparisonSection').classList.remove('hidden');
+                    break;
+            }
+        }
+
+        // 初始化
+        renderNewGames();
+        renderSoarGames();
+        renderTaptapList();
+        renderBilibiliList();
+        renderPublisherGrid();
+        renderComparison();
+    </script>
+</body>
+</html>
