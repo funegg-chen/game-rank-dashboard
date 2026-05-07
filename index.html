@@ -4,45 +4,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎮 游戏预约榜监控仪表盘</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 完全移除CDN依赖，使用纯CSS确保任何网络环境下都能正常显示 -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
-
-        * {
-            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
+        /* ===== CSS Reset & Base ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
+            color: #fff;
+            line-height: 1.6;
         }
 
+        a { color: inherit; text-decoration: none; }
+        button { cursor: pointer; border: none; outline: none; }
+
+        /* ===== Layout ===== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-1 { flex: 1; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 12px; }
+        .gap-4 { gap: 16px; }
+        .gap-8 { gap: 32px; }
+
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+        @media (min-width: 768px) {
+            .md\:flex-row { flex-direction: row; }
+            .md\:flex-row { flex-direction: row; }
+            .md\:items-center { align-items: center; }
+            .md\:justify-between { justify-content: space-between; }
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+            .lg\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+            .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .block { display: block; }
+        .inline-block { display: inline-block; }
+        .hidden { display: none; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+
+        /* ===== Spacing ===== */
+        .p-3 { padding: 12px; }
+        .p-4 { padding: 16px; }
+        .p-6 { padding: 24px; }
+        .py-1 { padding-top: 4px; padding-bottom: 4px; }
+        .py-2 { padding-top: 8px; padding-bottom: 8px; }
+        .py-3 { padding-top: 12px; padding-bottom: 12px; }
+        .py-4 { padding-top: 16px; padding-bottom: 16px; }
+        .py-6 { padding-top: 24px; padding-bottom: 24px; }
+        .py-8 { padding-top: 32px; padding-bottom: 32px; }
+        .px-2 { padding-left: 8px; padding-right: 8px; }
+        .px-3 { padding-left: 12px; padding-right: 12px; }
+        .px-4 { padding-left: 16px; padding-right: 16px; }
+        .pr-4 { padding-right: 16px; }
+        .pb-3 { padding-bottom: 12px; }
+        .mt-1 { margin-top: 4px; }
+        .mt-2 { margin-top: 8px; }
+        .mt-4 { margin-top: 16px; }
+        .mt-8 { margin-top: 32px; }
+        .mt-12 { margin-top: 48px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .ml-2 { margin-left: 8px; }
+
+        /* ===== Typography ===== */
+        .text-xs { font-size: 12px; }
+        .text-sm { font-size: 14px; }
+        .text-lg { font-size: 18px; }
+        .text-xl { font-size: 20px; }
+        .text-2xl { font-size: 24px; }
+        .text-3xl { font-size: 30px; }
+        .font-medium { font-weight: 500; }
+        .font-bold { font-weight: 700; }
+        .text-transparent { -webkit-text-fill-color: transparent; }
+
+        /* ===== Colors ===== */
+        .text-white { color: #fff; }
+        .text-gray-400 { color: #9ca3af; }
+        .text-gray-500 { color: #6b7280; }
+        .text-green-400 { color: #4ade80; }
+        .text-pink-400 { color: #f472b6; }
+        .text-red-400 { color: #f87171; }
+        .text-orange-400 { color: #fb923c; }
+        .text-yellow-400 { color: #fbbf24; }
+        .bg-clip-text { -webkit-background-clip: text; background-clip: text; }
+        .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
+        .from-purple-400 { --tw-gradient-from: #c084fc; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(192, 132, 252, 0)); }
+        .to-pink-400 { --tw-gradient-to: #f472b6; }
+
+        /* ===== Border ===== */
+        .border-b { border-bottom: 1px solid; }
+        .border-gray-700 { border-color: #374151; }
+        .border-gray-800 { border-color: #1f2937; }
+        .rounded-lg { border-radius: 8px; }
+        .rounded-xl { border-radius: 12px; }
+        .rounded-full { border-radius: 9999px; }
+        .rounded { border-radius: 4px; }
+
+        /* ===== Glass Card ===== */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* ===== Section Card ===== */
+        .section-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        /* ===== Stat Card ===== */
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        /* ===== Game Card ===== */
         .game-card {
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
-
         .game-card:hover {
             transform: translateX(5px);
             background: rgba(255, 255, 255, 0.1);
         }
+        .game-card.taptap { border-left-color: #00D632; }
+        .game-card.bilibili { border-left-color: #FB7299; }
 
-        .game-card.taptap {
-            border-left-color: #00D632;
-        }
-
-        .game-card.bilibili {
-            border-left-color: #FB7299;
-        }
-
+        /* ===== Rank Badge ===== */
         .rank-badge {
             width: 40px;
             height: 40px;
@@ -51,96 +169,87 @@
             justify-content: center;
             border-radius: 50%;
             font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
         }
+        .rank-top3 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+        .rank-normal { background: rgba(255, 255, 255, 0.2); color: #fff; }
 
-        .rank-top3 {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-        }
-
-        .rank-normal {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
-
+        /* ===== Tab Button ===== */
         .tab-btn {
             transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            background: transparent;
         }
+        .tab-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .tab-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
 
-        .tab-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
+        /* ===== Platform Badge ===== */
+        .platform-taptap { background: linear-gradient(135deg, #00D632, #00A825); color: white; }
+        .platform-bilibili { background: linear-gradient(135deg, #FB7299, #E84A6F); color: white; }
 
-        .stat-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-        }
-
-        .platform-taptap {
-            background: linear-gradient(135deg, #00D632, #00A825);
-        }
-
-        .platform-bilibili {
-            background: linear-gradient(135deg, #FB7299, #E84A6F);
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
+        /* ===== Badges ===== */
         .new-badge {
             background: linear-gradient(135deg, #FF6B6B, #FF4757);
             animation: pulse 1.5s infinite;
+            color: white;
         }
-
         .soar-badge {
             background: linear-gradient(135deg, #FFA500, #FF6B00);
             animation: pulse 1.5s infinite;
+            color: white;
+        }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
-        .section-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-        }
-
+        /* ===== New Game Card ===== */
         .new-game-card {
             background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 71, 87, 0.1));
             border: 1px solid rgba(255, 107, 107, 0.3);
             border-radius: 12px;
+            padding: 16px;
             transition: all 0.3s ease;
+            display: block;
         }
-
         .new-game-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
         }
 
-        .soar-game-card {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.15), rgba(255, 107, 0, 0.1));
-            border: 1px solid rgba(255, 165, 0, 0.3);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
+        /* ===== Scrollbar ===== */
+        .max-h-\[600px\] { max-height: 600px; }
+        .overflow-y-auto { overflow-y: auto; }
+        .overflow-x-auto { overflow-x: auto; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .soar-game-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.2);
-        }
+        /* ===== Header ===== */
+        .sticky { position: sticky; }
+        .top-0 { top: 0; }
+        .z-50 { z-index: 50; }
 
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
+        /* ===== Hover ===== */
+        .hover\:text-green-400:hover { color: #4ade80; }
 
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        /* ===== Border on hover ===== */
+        .hover\:bg-white\/5:hover { background: rgba(255,255,255,0.05); }
+
+        /* ===== Space-y ===== */
+        .space-y-2 > * + * { margin-top: 8px; }
+
+        /* ===== Min-width ===== */
+        .min-w-0 { min-width: 0; }
+        .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* ===== Footer ===== */
+        footer { text-align: center; padding: 24px 0; }
     </style>
 </head>
 <body class="text-white">
@@ -309,7 +418,7 @@
         // 完整数据（2026-04-28）
         // ==========================================
         const gameData = {
-                    "update_time": "2026-05-07 09:59:42",
+                    "update_time": "2026-05-07 15:59:53",
                     "date": "2026-05-07",
                     "taptap": [
                                 {
@@ -334,22 +443,22 @@
                                 },
                                 {
                                             "rank": 5,
-                                            "name": "遗忘之海",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 6,
                                             "name": "白银之城",
                                             "platform": "taptap"
                                 },
                                 {
+                                            "rank": 6,
+                                            "name": "归环",
+                                            "platform": "taptap"
+                                },
+                                {
                                             "rank": 7,
-                                            "name": "代号：神不言",
+                                            "name": "遗忘之海",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 8,
-                                            "name": "诡秘之主",
+                                            "name": "代号：神不言",
                                             "platform": "taptap"
                                 },
                                 {
@@ -359,32 +468,32 @@
                                 },
                                 {
                                             "rank": 10,
-                                            "name": "少女前线：蓝蝶契约",
+                                            "name": "诡秘之主",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 11,
-                                            "name": "无限大",
+                                            "name": "少女前线：蓝蝶契约",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 12,
-                                            "name": "龙岛异兽起源",
+                                            "name": "无限大",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 13,
-                                            "name": "星布谷地",
+                                            "name": "龙岛异兽起源",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 14,
-                                            "name": "吞噬星空",
+                                            "name": "星布谷地",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 15,
-                                            "name": "归环",
+                                            "name": "吞噬星空",
                                             "platform": "taptap"
                                 },
                                 {
@@ -394,37 +503,37 @@
                                 },
                                 {
                                             "rank": 17,
-                                            "name": "逆向坍塌：F",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 18,
                                             "name": "从零开始的钓鱼人生Lift",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 19,
-                                            "name": "我在末日开火车",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 20,
+                                            "rank": 18,
                                             "name": "望月",
                                             "platform": "taptap"
                                 },
                                 {
+                                            "rank": 19,
+                                            "name": "逆向坍塌：F",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 20,
+                                            "name": "我在末日开火车",
+                                            "platform": "taptap"
+                                },
+                                {
                                             "rank": 21,
-                                            "name": "来自黑洞的旅人",
+                                            "name": "灵宝派对",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 22,
-                                            "name": "失控进化",
+                                            "name": "来自黑洞的旅人",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 23,
-                                            "name": "饥困荒野",
+                                            "name": "失控进化",
                                             "platform": "taptap"
                                 },
                                 {
@@ -434,82 +543,82 @@
                                 },
                                 {
                                             "rank": 25,
-                                            "name": "灵宝派对",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 26,
                                             "name": "耀世格斗",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 27,
-                                            "name": "驯龙之旅",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 28,
-                                            "name": "8.9",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 29,
-                                            "name": "竞拍之王",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 30,
+                                            "rank": 26,
                                             "name": "镭明闪击",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 31,
-                                            "name": "篮球少女：飞跃巅峰",
+                                            "rank": 27,
+                                            "name": "饥困荒野",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 32,
+                                            "rank": 28,
+                                            "name": "Hello Kitty My Dream Store（TapTap 测试版）",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 29,
+                                            "name": "驯龙之旅",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 30,
+                                            "name": "竞拍之王",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 31,
                                             "name": "愤怒的小鸟：经典归来",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 33,
-                                            "name": "代号：大女主",
+                                            "rank": 32,
+                                            "name": "篮球少女：飞跃巅峰",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 34,
+                                            "rank": 33,
                                             "name": "崩坏：因缘精灵",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 35,
-                                            "name": "怪物猎人：旅人",
+                                            "rank": 34,
+                                            "name": "代号：深渊之歌（TapTap 测试版）",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 36,
+                                            "rank": 35,
                                             "name": "王者万象棋",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 37,
+                                            "rank": 36,
                                             "name": "灵魂潮汐2",
                                             "platform": "taptap"
                                 },
                                 {
+                                            "rank": 37,
+                                            "name": "代号：大女主",
+                                            "platform": "taptap"
+                                },
+                                {
                                             "rank": 38,
-                                            "name": "七界梦谭",
+                                            "name": "童话师",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 39,
-                                            "name": "森盒Senbox³",
+                                            "name": "粒粒的小人国",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 40,
-                                            "name": "代号：深渊之歌（TapTap 测试版）",
+                                            "name": "森盒Senbox³",
                                             "platform": "taptap"
                                 },
                                 {
@@ -519,235 +628,235 @@
                                 },
                                 {
                                             "rank": 42,
-                                            "name": "童话师",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 43,
-                                            "name": "粒粒的小人国",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 44,
-                                            "name": "纤维",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 45,
-                                            "name": "闪耀吧！噜咪",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 46,
-                                            "name": "头号禁区",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 47,
                                             "name": "代号莲",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 48,
-                                            "name": "怨楼",
+                                            "rank": 43,
+                                            "name": "纤维",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 49,
-                                            "name": "乌托",
+                                            "rank": 44,
+                                            "name": "闪耀吧！噜咪",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 50,
-                                            "name": "卡片魔王：只剩个头！",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 51,
-                                            "name": "绿梦：时空之声",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 52,
-                                            "name": "仙逆：战天道",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 53,
-                                            "name": "妹居物语",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 54,
-                                            "name": "小岛日记",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 55,
-                                            "name": "土豆兄弟",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 56,
-                                            "name": "大道仙途",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 57,
+                                            "rank": 45,
                                             "name": "三国志将星闪耀",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 58,
+                                            "rank": 46,
+                                            "name": "谍：惊蛰",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 47,
+                                            "name": "七界梦谭",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 48,
+                                            "name": "怪物猎人：旅人",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 49,
+                                            "name": "头号禁区",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 50,
+                                            "name": "怨楼",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 51,
+                                            "name": "乌托",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 52,
+                                            "name": "卡片魔王：只剩个头！",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 53,
+                                            "name": "绿梦：时空之声",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 54,
                                             "name": "萌神契约",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 59,
-                                            "name": "盛世天下：女帝篇",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 60,
+                                            "rank": 55,
                                             "name": "末日之下",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 61,
-                                            "name": "白日梦想屋",
+                                            "rank": 56,
+                                            "name": "妹居物语\n应用",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 62,
-                                            "name": "火线战姬",
+                                            "rank": 57,
+                                            "name": "大道仙途",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 63,
-                                            "name": "喵咪咖啡馆",
+                                            "rank": 58,
+                                            "name": "仙逆：战天道",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 64,
-                                            "name": "妖灵打工团",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 65,
+                                            "rank": 59,
                                             "name": "星眠",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 66,
+                                            "rank": 60,
+                                            "name": "盛世天下：女帝篇",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 61,
+                                            "name": "小岛日记",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 62,
+                                            "name": "白日梦想屋",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 63,
+                                            "name": "土豆兄弟",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 64,
                                             "name": "DeathPlunder亡命掠夺者",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 67,
-                                            "name": "吸血鬼爬行者",
+                                            "rank": 65,
+                                            "name": "火线战姬",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 10,
-                                            "name": "Roguelike",
+                                            "rank": 66,
+                                            "name": "喵咪咖啡馆",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 67,
+                                            "name": "妖灵打工团",
                                             "platform": "taptap"
                                 },
                                 {
                                             "rank": 68,
-                                            "name": "蓝色星原：旅谣",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 69,
                                             "name": "伊莫",
                                             "platform": "taptap"
                                 },
                                 {
+                                            "rank": 69,
+                                            "name": "我有一个末日安全屋",
+                                            "platform": "taptap"
+                                },
+                                {
                                             "rank": 70,
+                                            "name": "新大奉打更人",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 71,
+                                            "name": "吸血鬼爬行者",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 72,
+                                            "name": "永恒之塔：经典",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 73,
+                                            "name": "超自然博物馆避难所",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 74,
+                                            "name": "蓝色星原：旅谣",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 75,
+                                            "name": "元夜十二谈",
+                                            "platform": "taptap"
+                                },
+                                {
+                                            "rank": 76,
                                             "name": "异人之下",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 1,
-                                            "name": "三角洲行动",
+                                            "rank": 77,
+                                            "name": "代号：Team2",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 2,
-                                            "name": "异环",
+                                            "rank": 78,
+                                            "name": "仙境传说RO：守护永恒的爱2",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 3,
-                                            "name": "洛克王国：世界",
+                                            "rank": 79,
+                                            "name": "苍生",
                                             "platform": "taptap"
                                 },
                                 {
-                                            "rank": 4,
-                                            "name": "鸣潮",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 5,
-                                            "name": "绝区零",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 6,
-                                            "name": "我的世界：移动版",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 7,
-                                            "name": "超自然行动组",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 8,
-                                            "name": "光·遇",
-                                            "platform": "taptap"
-                                },
-                                {
-                                            "rank": 9,
-                                            "name": "乱涂彩世界",
+                                            "rank": 80,
+                                            "name": "蜡笔小新之小帮手大作战",
                                             "platform": "taptap"
                                 }
                     ],
                     "bilibili": [
                                 {
                                             "rank": 4,
-                                            "name": "纸嫁衣9",
-                                            "publisher": "成都惊帆科技有限公司",
+                                            "name": "望月",
+                                            "publisher": "望月游戏研究院",
                                             "platform": "bilibili"
                                 },
                                 {
                                             "rank": 5,
-                                            "name": "绿梦：时空之声",
-                                            "publisher": "上海竹子互联网信息服务有限公司",
-                                            "platform": "bilibili"
-                                },
-                                {
-                                            "rank": 6,
                                             "name": "闪耀吧！噜咪",
                                             "publisher": "上海幻电信息科技有限公司",
                                             "platform": "bilibili"
                                 },
                                 {
+                                            "rank": 6,
+                                            "name": "绿梦：时空之声",
+                                            "publisher": "上海竹子互联网信息服务有限公司",
+                                            "platform": "bilibili"
+                                },
+                                {
                                             "rank": 7,
+                                            "name": "遗忘之海",
+                                            "publisher": "网易（杭州）网络有限公司",
+                                            "platform": "bilibili"
+                                },
+                                {
+                                            "rank": 8,
                                             "name": "无限大",
                                             "publisher": "网易游戏",
                                             "platform": "bilibili"
                                 },
                                 {
-                                            "rank": 8,
+                                            "rank": 9,
                                             "name": "归环",
                                             "publisher": "萨罗斯工作室",
-                                            "platform": "bilibili"
-                                },
-                                {
-                                            "rank": 9,
-                                            "name": "遗忘之海",
-                                            "publisher": "网易（杭州）网络有限公司",
                                             "platform": "bilibili"
                                 },
                                 {
@@ -770,20 +879,20 @@
                                 },
                                 {
                                             "rank": 13,
+                                            "name": "星布谷地",
+                                            "publisher": "米哈游",
+                                            "platform": "bilibili"
+                                },
+                                {
+                                            "rank": 14,
                                             "name": "诡秘之主",
                                             "publisher": "弹指宇宙",
                                             "platform": "bilibili"
                                 },
                                 {
-                                            "rank": 14,
+                                            "rank": 15,
                                             "name": "怪物猎人：旅人",
                                             "publisher": "腾讯",
-                                            "platform": "bilibili"
-                                },
-                                {
-                                            "rank": 15,
-                                            "name": "星布谷地",
-                                            "publisher": "米哈游",
                                             "platform": "bilibili"
                                 },
                                 {
@@ -800,20 +909,20 @@
                                 },
                                 {
                                             "rank": 18,
+                                            "name": "代号：深渊之歌",
+                                            "publisher": "淘气泡游戏",
+                                            "platform": "bilibili"
+                                },
+                                {
+                                            "rank": 19,
                                             "name": "蓝色星原：旅谣",
                                             "publisher": "芒啾网络",
                                             "platform": "bilibili"
                                 },
                                 {
-                                            "rank": 19,
+                                            "rank": 20,
                                             "name": "七界梦谭",
                                             "publisher": "紫龙游戏",
-                                            "platform": "bilibili"
-                                },
-                                {
-                                            "rank": 20,
-                                            "name": "代号：深渊之歌",
-                                            "publisher": "淘气泡游戏",
                                             "platform": "bilibili"
                                 },
                                 {
@@ -823,33 +932,33 @@
                                             "platform": "bilibili"
                                 },
                                 {
-                                            "rank": 23,
-                                            "name": "Apex英雄",
-                                            "publisher": "EA",
-                                            "platform": "bilibili"
-                                },
-                                {
-                                            "rank": 24,
+                                            "rank": 22,
                                             "name": "虚环",
                                             "publisher": "深圳市腾讯计算机系统有限公司",
                                             "platform": "bilibili"
                                 },
                                 {
-                                            "rank": 25,
-                                            "name": "哀鸿：城破十日记",
-                                            "publisher": "零创游戏",
-                                            "platform": "bilibili"
-                                },
-                                {
-                                            "rank": 26,
+                                            "rank": 24,
                                             "name": "夜幕之下",
                                             "publisher": "聚娱网络",
                                             "platform": "bilibili"
                                 },
                                 {
+                                            "rank": 25,
+                                            "name": "Apex英雄",
+                                            "publisher": "EA",
+                                            "platform": "bilibili"
+                                },
+                                {
+                                            "rank": 26,
+                                            "name": "哀鸿：城破十日记",
+                                            "publisher": "零创游戏",
+                                            "platform": "bilibili"
+                                },
+                                {
                                             "rank": 27,
-                                            "name": "镭明闪击",
-                                            "publisher": "北京朝夕光年信息技术有限公司",
+                                            "name": "东离剑游纪",
+                                            "publisher": "瓜栗游戏",
                                             "platform": "bilibili"
                                 },
                                 {
@@ -860,14 +969,14 @@
                                 },
                                 {
                                             "rank": 29,
-                                            "name": "东离剑游纪",
-                                            "publisher": "瓜栗游戏",
+                                            "name": "镭明闪击",
+                                            "publisher": "北京朝夕光年信息技术有限公司",
                                             "platform": "bilibili"
                                 },
                                 {
                                             "rank": 30,
-                                            "name": "异人之下",
-                                            "publisher": "腾讯",
+                                            "name": "灵魂潮汐2",
+                                            "publisher": "星启兴网络",
                                             "platform": "bilibili"
                                 },
                                 {
@@ -878,32 +987,32 @@
                                 },
                                 {
                                             "rank": 32,
+                                            "name": "异人之下",
+                                            "publisher": "腾讯",
+                                            "platform": "bilibili"
+                                },
+                                {
+                                            "rank": 33,
                                             "name": "元夜十二谈",
                                             "publisher": "上海游卡",
                                             "platform": "bilibili"
                                 },
                                 {
-                                            "rank": 33,
+                                            "rank": 34,
                                             "name": "光阴之外",
                                             "publisher": "上海宾麒",
                                             "platform": "bilibili"
                                 },
                                 {
-                                            "rank": 34,
-                                            "name": "灵魂潮汐2",
-                                            "publisher": "星启兴网络",
-                                            "platform": "bilibili"
-                                },
-                                {
-                                            "rank": 35,
+                                            "rank": 36,
                                             "name": "奥特曼英雄决战",
                                             "publisher": "畅乐互娱",
                                             "platform": "bilibili"
                                 },
                                 {
                                             "rank": 37,
-                                            "name": "苍蓝避风港",
-                                            "publisher": "幻萌网络",
+                                            "name": "真・三国无双 天下",
+                                            "publisher": "盛天游戏",
                                             "platform": "bilibili"
                                 },
                                 {
@@ -917,86 +1026,29 @@
                                             "name": "失控进化",
                                             "publisher": "腾讯",
                                             "platform": "bilibili"
+                                },
+                                {
+                                            "rank": 40,
+                                            "name": "苍蓝避风港",
+                                            "publisher": "幻萌网络",
+                                            "platform": "bilibili"
                                 }
                     ],
                     "total_taptap": 80,
-                    "total_bilibili": 34,
+                    "total_bilibili": 35,
                     "new_games": [
                                 {
-                                            "name": "纸嫁衣9",
-                                            "rank": 2,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/纸嫁衣9",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "少女前线：蓝蝶契约",
-                                            "rank": 10,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/少女前线：蓝蝶契约",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "逆向坍塌：F",
-                                            "rank": 17,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/逆向坍塌：F",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "从零开始的钓鱼人生Lift",
-                                            "rank": 18,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/从零开始的钓鱼人生Lift",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "灵宝派对",
-                                            "rank": 25,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/灵宝派对",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "8.9",
+                                            "name": "Hello Kitty My Dream Store（TapTap 测试版）",
                                             "rank": 28,
                                             "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/8.9",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "镭明闪击",
-                                            "rank": 30,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/镭明闪击",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "篮球少女：飞跃巅峰",
-                                            "rank": 31,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/篮球少女：飞跃巅峰",
+                                            "link": "https://www.taptap.cn/app/Hello Kitty My Dream Store（TapTap 测试版）",
                                             "score": 0,
                                             "highlight": "今日新上榜",
                                             "reservations": "--"
                                 },
                                 {
                                             "name": "代号：大女主",
-                                            "rank": 33,
+                                            "rank": 37,
                                             "type": "taptap",
                                             "link": "https://www.taptap.cn/app/代号：大女主",
                                             "score": 0,
@@ -1004,53 +1056,8 @@
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "灵魂潮汐2",
-                                            "rank": 37,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/灵魂潮汐2",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "怨楼",
-                                            "rank": 48,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/怨楼",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "卡片魔王：只剩个头！",
-                                            "rank": 50,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/卡片魔王：只剩个头！",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "小岛日记",
-                                            "rank": 54,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/小岛日记",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "土豆兄弟",
-                                            "rank": 55,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/土豆兄弟",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
                                             "name": "三国志将星闪耀",
-                                            "rank": 57,
+                                            "rank": 45,
                                             "type": "taptap",
                                             "link": "https://www.taptap.cn/app/三国志将星闪耀",
                                             "score": 0,
@@ -1058,53 +1065,107 @@
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "萌神契约",
-                                            "rank": 58,
+                                            "name": "谍：惊蛰",
+                                            "rank": 46,
                                             "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/萌神契约",
+                                            "link": "https://www.taptap.cn/app/谍：惊蛰",
                                             "score": 0,
                                             "highlight": "今日新上榜",
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "末日之下",
-                                            "rank": 60,
+                                            "name": "绿梦：时空之声",
+                                            "rank": 53,
                                             "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/末日之下",
+                                            "link": "https://www.taptap.cn/app/绿梦：时空之声",
                                             "score": 0,
                                             "highlight": "今日新上榜",
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "白日梦想屋",
-                                            "rank": 61,
+                                            "name": "妹居物语\n应用",
+                                            "rank": 56,
                                             "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/白日梦想屋",
+                                            "link": "https://www.taptap.cn/app/妹居物语\n应用",
                                             "score": 0,
                                             "highlight": "今日新上榜",
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "火线战姬",
-                                            "rank": 62,
+                                            "name": "大道仙途",
+                                            "rank": 57,
                                             "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/火线战姬",
+                                            "link": "https://www.taptap.cn/app/大道仙途",
                                             "score": 0,
                                             "highlight": "今日新上榜",
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "妖灵打工团",
-                                            "rank": 64,
+                                            "name": "喵咪咖啡馆",
+                                            "rank": 66,
                                             "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/妖灵打工团",
+                                            "link": "https://www.taptap.cn/app/喵咪咖啡馆",
+                                            "score": 0,
+                                            "highlight": "今日新上榜",
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "伊莫",
+                                            "rank": 68,
+                                            "type": "taptap",
+                                            "link": "https://www.taptap.cn/app/伊莫",
+                                            "score": 0,
+                                            "highlight": "今日新上榜",
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "我有一个末日安全屋",
+                                            "rank": 69,
+                                            "type": "taptap",
+                                            "link": "https://www.taptap.cn/app/我有一个末日安全屋",
+                                            "score": 0,
+                                            "highlight": "今日新上榜",
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "新大奉打更人",
+                                            "rank": 70,
+                                            "type": "taptap",
+                                            "link": "https://www.taptap.cn/app/新大奉打更人",
+                                            "score": 0,
+                                            "highlight": "今日新上榜",
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "吸血鬼爬行者",
+                                            "rank": 71,
+                                            "type": "taptap",
+                                            "link": "https://www.taptap.cn/app/吸血鬼爬行者",
+                                            "score": 0,
+                                            "highlight": "今日新上榜",
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "永恒之塔：经典",
+                                            "rank": 72,
+                                            "type": "taptap",
+                                            "link": "https://www.taptap.cn/app/永恒之塔：经典",
+                                            "score": 0,
+                                            "highlight": "今日新上榜",
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "元夜十二谈",
+                                            "rank": 75,
+                                            "type": "taptap",
+                                            "link": "https://www.taptap.cn/app/元夜十二谈",
                                             "score": 0,
                                             "highlight": "今日新上榜",
                                             "reservations": "--"
                                 },
                                 {
                                             "name": "异人之下",
-                                            "rank": 70,
+                                            "rank": 76,
                                             "type": "taptap",
                                             "link": "https://www.taptap.cn/app/异人之下",
                                             "score": 0,
@@ -1112,28 +1173,10 @@
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "鸣潮",
-                                            "rank": 4,
+                                            "name": "代号：Team2",
+                                            "rank": 77,
                                             "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/鸣潮",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "绝区零",
-                                            "rank": 5,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/绝区零",
-                                            "score": 0,
-                                            "highlight": "今日新上榜",
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "超自然行动组",
-                                            "rank": 7,
-                                            "type": "taptap",
-                                            "link": "https://www.taptap.cn/app/超自然行动组",
+                                            "link": "https://www.taptap.cn/app/代号：Team2",
                                             "score": 0,
                                             "highlight": "今日新上榜",
                                             "reservations": "--"
@@ -1141,55 +1184,46 @@
                     ],
                     "soar_games": [
                                 {
-                                            "name": "宗师之上",
-                                            "from": 13,
-                                            "to": 1,
-                                            "change": 12,
+                                            "name": "归环",
+                                            "from": 17,
+                                            "to": 6,
+                                            "change": 11,
                                             "type": "taptap",
                                             "score": 0,
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "卡厄思梦境",
-                                            "from": 19,
-                                            "to": 3,
-                                            "change": 16,
+                                            "name": "从零开始的钓鱼人生Lift",
+                                            "from": 36,
+                                            "to": 17,
+                                            "change": 19,
                                             "type": "taptap",
                                             "score": 0,
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "遗忘之海",
-                                            "from": 31,
-                                            "to": 5,
-                                            "change": 26,
+                                            "name": "灵宝派对",
+                                            "from": 34,
+                                            "to": 21,
+                                            "change": 13,
                                             "type": "taptap",
                                             "score": 0,
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "诡秘之主",
-                                            "from": 24,
-                                            "to": 8,
-                                            "change": 16,
+                                            "name": "耀世格斗",
+                                            "from": 38,
+                                            "to": 25,
+                                            "change": 13,
                                             "type": "taptap",
                                             "score": 0,
                                             "reservations": "--"
                                 },
                                 {
-                                            "name": "我在末日开火车",
-                                            "from": 55,
-                                            "to": 19,
-                                            "change": 36,
-                                            "type": "taptap",
-                                            "score": 0,
-                                            "reservations": "--"
-                                },
-                                {
-                                            "name": "饥困荒野",
-                                            "from": 59,
-                                            "to": 23,
-                                            "change": 36,
+                                            "name": "镭明闪击",
+                                            "from": 44,
+                                            "to": 26,
+                                            "change": 18,
                                             "type": "taptap",
                                             "score": 0,
                                             "reservations": "--"
@@ -1197,24 +1231,69 @@
                                 {
                                             "name": "驯龙之旅",
                                             "from": 40,
-                                            "to": 27,
+                                            "to": 29,
+                                            "change": 11,
+                                            "type": "taptap",
+                                            "score": 0,
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "愤怒的小鸟：经典归来",
+                                            "from": 41,
+                                            "to": 31,
+                                            "change": 10,
+                                            "type": "taptap",
+                                            "score": 0,
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "篮球少女：飞跃巅峰",
+                                            "from": 45,
+                                            "to": 32,
                                             "change": 13,
                                             "type": "taptap",
                                             "score": 0,
                                             "reservations": "--"
                                 },
                                 {
+                                            "name": "代号：深渊之歌（TapTap 测试版）",
+                                            "from": 62,
+                                            "to": 34,
+                                            "change": 28,
+                                            "type": "taptap",
+                                            "score": 0,
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "童话师",
+                                            "from": 48,
+                                            "to": 38,
+                                            "change": 10,
+                                            "type": "taptap",
+                                            "score": 0,
+                                            "reservations": "--"
+                                },
+                                {
                                             "name": "闪耀吧！噜咪",
-                                            "from": 61,
-                                            "to": 45,
-                                            "change": 16,
+                                            "from": 55,
+                                            "to": 44,
+                                            "change": 11,
+                                            "type": "taptap",
+                                            "score": 0,
+                                            "reservations": "--"
+                                },
+                                {
+                                            "name": "末日之下",
+                                            "from": 69,
+                                            "to": 55,
+                                            "change": 14,
                                             "type": "taptap",
                                             "score": 0,
                                             "reservations": "--"
                                 }
                     ],
-                    "total_new": 24,
-                    "total_soar": 8
+                    "total_new": 16,
+                    "total_soar": 12
         };
 
         // ==========================================
@@ -1230,86 +1309,117 @@
         document.getElementById('newCount').textContent = gameData.total_new;
         document.getElementById('soarCount').textContent = gameData.total_soar;
 
-        // 渲染新上榜产品
-        function renderNewGames() {
-            const grid = document.getElementById('newGamesGrid');
-            grid.innerHTML = gameData.new_games.map(game => `
-                <a href="${game.link}" target="_blank" class="new-game-card p-4 block">
-                    <div class="flex items-start justify-between mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="new-badge px-2 py-0.5 rounded text-xs font-bold">NEW</span>
-                            <span class="text-gray-500 text-sm">#${game.rank}</span>
-                        </div>
-                        <span class="text-yellow-400 text-sm">⭐ ${game.score > 0 ? game.score : '?'}</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-1">${game.name}</h3>
-                    <p class="text-gray-400 text-sm mb-2">${game.highlight}</p>
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="text-gray-500">📥 ${game.reservations}</span>
-                        <span class="text-gray-400">${game.type}</span>
-                    </div>
-                </a>
-            `).join('');
-        }
+// 渲染新上榜产品
+function renderNewGames() {
+    const grid = document.getElementById('newGamesGrid');
+    if (!gameData.new_games || gameData.new_games.length === 0) {
+        grid.innerHTML = '<p class="text-gray-500 text-center py-8">暂无新上榜数据</p>';
+        return;
+    }
+    grid.innerHTML = gameData.new_games.map(game => {
+        const score = game.score !== undefined && game.score > 0 ? game.score : '--';
+        const reservations = game.reservations !== undefined && game.reservations !== '--' ? game.reservations : '--';
+        const platform = game.platform || game.type || 'taptap';
+        const link = game.link || (game.name ? `https://www.taptap.cn/app/${encodeURIComponent(game.name)}` : '#');
+        const highlight = game.highlight || '今日新上榜';
+        return `
+        <a href="${link}" target="_blank" class="new-game-card p-4 block">
+            <div class="flex items-start justify-between mb-2">
+                <div class="flex items-center gap-2">
+                    <span class="new-badge px-2 py-0.5 rounded text-xs font-bold">NEW</span>
+                    <span class="text-gray-500 text-sm">#${game.rank || '?'}</span>
+                </div>
+                <span class="text-yellow-400 text-sm">⭐ ${score}</span>
+            </div>
+            <h3 class="font-bold text-lg mb-1">${game.name || '未知游戏'}</h3>
+            <p class="text-gray-400 text-sm mb-2">${highlight}</p>
+            <div class="flex items-center justify-between text-xs">
+                <span class="text-gray-500">📥 ${reservations}</span>
+                <span class="text-gray-400">${platform}</span>
+            </div>
+        </a>
+    `}).join('');
+}
 
-        // 渲染飙升排名
-        function renderSoarGames() {
-            const tbody = document.getElementById('soarGamesTable');
-            tbody.innerHTML = gameData.soar_games.map(game => `
-                <tr class="border-b border-gray-800 hover:bg-white/5">
-                    <td class="py-3 pr-4">
-                        <span class="soar-badge px-2 py-1 rounded text-sm font-bold">
-                            ⬆️ ${game.from} → #${game.to}
-                        </span>
-                        <span class="text-orange-400 text-sm ml-2">+${game.change}位</span>
-                    </td>
-                    <td class="py-3 pr-4 font-medium">${game.name}</td>
-                    <td class="py-3 pr-4 text-yellow-400">⭐ ${game.score}</td>
-                    <td class="py-3 pr-4 text-gray-400">${game.reservations}</td>
-                    <td class="py-3 text-gray-500 text-sm">${game.type}</td>
-                </tr>
-            `).join('');
-        }
+// 渲染飙升排名
+function renderSoarGames() {
+    const tbody = document.getElementById('soarGamesTable');
+    if (!gameData.soar_games || gameData.soar_games.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-gray-500">暂无飙升数据</td></tr>';
+        return;
+    }
+    tbody.innerHTML = gameData.soar_games.map(game => {
+        const score = game.score !== undefined && game.score > 0 ? game.score : '--';
+        const reservations = game.reservations !== undefined && game.reservations !== '--' ? game.reservations : '--';
+        const platform = game.platform || game.type || 'taptap';
+        return `
+        <tr class="border-b border-gray-800 hover:bg-white/5">
+            <td class="py-3 pr-4">
+                <span class="soar-badge px-2 py-1 rounded text-sm font-bold">
+                    ⬆️ #${game.from || '?'} → #${game.to || '?'}
+                </span>
+                <span class="text-orange-400 text-sm ml-2">+${game.change || 0}位</span>
+            </td>
+            <td class="py-3 pr-4 font-medium">${game.name || '未知游戏'}</td>
+            <td class="py-3 pr-4 text-yellow-400">⭐ ${score}</td>
+            <td class="py-3 pr-4 text-gray-400">${reservations}</td>
+            <td class="py-3 text-gray-500 text-sm">${platform}</td>
+        </tr>
+    `}).join('');
+}
 
         // 渲染TapTap榜单
         function renderTaptapList() {
             const list = document.getElementById('taptapList');
-            list.innerHTML = gameData.taptap.map(game => `
+            list.innerHTML = gameData.taptap.map(game => {
+                const score = game.score !== undefined && game.score > 0 ? game.score : '--';
+                const reservations = game.reservations !== undefined && game.reservations !== '--' ? game.reservations : '--';
+                const platform = game.platform || 'taptap';
+                // 构建TapTap链接（如果数据中有链接就用，否则根据名称构造）
+                const link = game.link || (game.name ? `https://www.taptap.cn/app/${encodeURIComponent(game.name)}` : '#');
+                return `
                 <div class="game-card taptap glass-card rounded-lg p-3 flex items-center gap-4">
                     <div class="rank-badge ${game.rank <= 3 ? 'rank-top3' : 'rank-normal'}">
                         ${game.rank}
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2">
-                            <a href="${game.link}" target="_blank" class="font-medium hover:text-green-400 truncate">${game.name}</a>
+                            <a href="${link}" target="_blank" class="font-medium hover:text-green-400 truncate">${game.name}</a>
                         </div>
                         <div class="flex items-center gap-3 text-xs text-gray-400 mt-1">
-                            <span>📥 ${game.reservations}</span>
-                            <span>⭐ ${game.score}</span>
-                            <span>${game.type}</span>
+                            <span>📥 ${reservations}</span>
+                            <span>⭐ ${score}</span>
+                            <span>${platform}</span>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // 渲染Bilibili榜单
         function renderBilibiliList() {
             const list = document.getElementById('bilibiliList');
-            list.innerHTML = gameData.bilibili.map(game => `
+            if (!gameData.bilibili || gameData.bilibili.length === 0) {
+                list.innerHTML = '<p class="text-gray-500 text-center py-4">暂无Bilibili数据</p>';
+                return;
+            }
+            list.innerHTML = gameData.bilibili.map(game => {
+                const platform = game.platform || 'bilibili';
+                const publisher = game.publisher || '--';
+                return `
                 <div class="game-card bilibili glass-card rounded-lg p-3 flex items-center gap-4">
                     <div class="rank-badge ${game.rank <= 3 ? 'rank-top3' : 'rank-normal'}">
-                        ${game.rank}
+                        ${game.rank || '?'}
                     </div>
                     <div class="flex-1 min-w-0">
-                        <div class="font-medium truncate">${game.name}</div>
+                        <div class="font-medium truncate">${game.name || '未知游戏'}</div>
                         <div class="flex items-center gap-3 text-xs text-gray-400 mt-1">
-                            <span>🏢 ${game.publisher}</span>
-                            <span>${game.type}</span>
+                            <span>🏢 ${publisher}</span>
+                            <span>${platform}</span>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // 渲染厂商分类
