@@ -1,90 +1,90 @@
 {
-  "update_time": "2026-07-20 10:23:13",
-  "date": "2026-07-20",
+  "update_time": "2026-08-05 20:19:25",
+  "date": "2026-08-05",
   "taptap": [
     {
       "rank": 1,
-      "name": "遗忘之海",
+      "name": "雾海之下",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/755604"
+      "link": "https://www.taptap.cn/app/894881"
     },
     {
       "rank": 2,
-      "name": "伯吉的温馨厨房",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/882850"
-    },
-    {
-      "rank": 3,
-      "name": "白银之城",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/754910"
-    },
-    {
-      "rank": 4,
       "name": "诡秘之主",
       "platform": "taptap",
       "link": "https://www.taptap.cn/app/281223"
     },
     {
-      "rank": 5,
+      "rank": 3,
+      "name": "群星征途2117",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/752710"
+    },
+    {
+      "rank": 4,
       "name": "龙岛异兽起源",
       "platform": "taptap",
       "link": "https://www.taptap.cn/app/805993"
     },
     {
-      "rank": 6,
-      "name": "凯蒂猫梦想商店",
+      "rank": 5,
+      "name": "白银之城",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/789293"
+      "link": "https://www.taptap.cn/app/754910"
+    },
+    {
+      "rank": 6,
+      "name": "盗墓笔记：启程",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/716674"
     },
     {
       "rank": 7,
-      "name": "对峙：交锋时刻",
+      "name": "饥困荒野",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/880259"
+      "link": "https://www.taptap.cn/app/194039"
     },
     {
       "rank": 8,
-      "name": "崩坏：因缘精灵",
+      "name": "伯吉的温馨厨房",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/753921"
+      "link": "https://www.taptap.cn/app/882850"
     },
     {
       "rank": 9,
-      "name": "诡影藏锋",
+      "name": "剑隐侠踪录",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/874444"
+      "link": "https://www.taptap.cn/app/798735"
     },
     {
       "rank": 10,
-      "name": "梦战：剑之海",
+      "name": "赘婿",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/880659"
+      "link": "https://www.taptap.cn/app/775759"
     },
     {
       "rank": 11,
-      "name": "集合！浆果镇",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/839552"
-    },
-    {
-      "rank": 12,
       "name": "蓝色星原：旅谣",
       "platform": "taptap",
       "link": "https://www.taptap.cn/app/593829"
     },
     {
-      "rank": 13,
-      "name": "苏丹的游戏",
+      "rank": 12,
+      "name": "诡影藏锋",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/866366"
+      "link": "https://www.taptap.cn/app/874444"
     },
     {
-      "rank": 14,
+      "rank": 13,
       "name": "诡秘之主：愚者",
       "platform": "taptap",
       "link": "https://www.taptap.cn/app/865791"
+    },
+    {
+      "rank": 14,
+      "name": "对峙：交锋时刻",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/880259"
     },
     {
       "rank": 15,
@@ -94,460 +94,460 @@
     },
     {
       "rank": 16,
-      "name": "望月",
+      "name": "米塔",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/386208"
+      "link": "https://www.taptap.cn/app/738556"
     },
     {
       "rank": 17,
-      "name": "赘婿",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/775759"
-    },
-    {
-      "rank": 18,
-      "name": "奶茶店模拟器——重生之我在冰堡甜城当店长",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/779303"
-    },
-    {
-      "rank": 19,
-      "name": "代号：神不言",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/849146"
-    },
-    {
-      "rank": 20,
-      "name": "拳皇全明星",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/869901"
-    },
-    {
-      "rank": 21,
-      "name": "盗梦英雄2：幻野",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/786087"
-    },
-    {
-      "rank": 22,
-      "name": "森盒\n应用",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/777514"
-    },
-    {
-      "rank": 23,
-      "name": "元夜十二谈",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/808743"
-    },
-    {
-      "rank": 24,
-      "name": "伊莫",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/748031"
-    },
-    {
-      "rank": 25,
-      "name": "外婆的手账本",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/871924"
-    },
-    {
-      "rank": 26,
-      "name": "约定之日",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/387285"
-    },
-    {
-      "rank": 27,
-      "name": "七界梦谭",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/611414"
-    },
-    {
-      "rank": 28,
-      "name": "剑隐侠踪录",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/798735"
-    },
-    {
-      "rank": 29,
-      "name": "无限大",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/383874"
-    },
-    {
-      "rank": 30,
-      "name": "龙族：最后的旅行",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/769559"
-    },
-    {
-      "rank": 31,
-      "name": "超时空街球对决",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/876579"
-    },
-    {
-      "rank": 32,
-      "name": "暮色大师",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/876252"
-    },
-    {
-      "rank": 33,
-      "name": "蜡笔小新之小帮手大作战",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/724400"
-    },
-    {
-      "rank": 34,
-      "name": "乌托",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/773812"
-    },
-    {
-      "rank": 35,
-      "name": "PuffPals: Island Skies",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/233809"
-    },
-    {
-      "rank": 36,
-      "name": "破烂水手",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/744422"
-    },
-    {
-      "rank": 37,
-      "name": "粒粒的小人国",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/772909"
-    },
-    {
-      "rank": 38,
-      "name": "饥困荒野",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/194039"
-    },
-    {
-      "rank": 39,
-      "name": "舒舒服服小岛时光",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/729276"
-    },
-    {
-      "rank": 40,
-      "name": "饥饿派画家2：迷失",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/744427"
-    },
-    {
-      "rank": 41,
-      "name": "三国志：王道天下",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/824115"
-    },
-    {
-      "rank": 42,
-      "name": "放开那妖怪",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/846722"
-    },
-    {
-      "rank": 43,
-      "name": "冒险之旅",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/874806"
-    },
-    {
-      "rank": 44,
-      "name": "猛兽派对",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/200818"
-    },
-    {
-      "rank": 45,
-      "name": "代号：巫师之路",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/759959"
-    },
-    {
-      "rank": 46,
-      "name": "Melocube",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/854463"
-    },
-    {
-      "rank": 47,
-      "name": "星布谷地",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/776320"
-    },
-    {
-      "rank": 48,
-      "name": "绿梦：时空之声",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/237561"
-    },
-    {
-      "rank": 49,
-      "name": "镇魂街王者归来",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/792753"
-    },
-    {
-      "rank": 50,
-      "name": "斗破苍穹：斗帝之路",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/842754"
-    },
-    {
-      "rank": 51,
-      "name": "追迹迷城",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/716987"
-    },
-    {
-      "rank": 52,
-      "name": "土豆兄弟",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/256335"
-    },
-    {
-      "rank": 53,
-      "name": "五星好市民",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/752366"
-    },
-    {
-      "rank": 54,
-      "name": "烽烟",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/723647"
-    },
-    {
-      "rank": 55,
-      "name": "黄油猫",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/708247"
-    },
-    {
-      "rank": 56,
-      "name": "海上有座极极岛",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/877935"
-    },
-    {
-      "rank": 57,
-      "name": "在外挂里打游戏",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/868732"
-    },
-    {
-      "rank": 58,
-      "name": "霓虹深渊2",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/751308"
-    },
-    {
-      "rank": 59,
-      "name": "方舟：生存进化",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/133568"
-    },
-    {
-      "rank": 60,
-      "name": "代号莲",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/809354"
-    },
-    {
-      "rank": 61,
-      "name": "小垠的秘密",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/863883"
-    },
-    {
-      "rank": 62,
-      "name": "拉尼亚（TapTap测试版）",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/836285"
-    },
-    {
-      "rank": 63,
-      "name": "仙境传说RO：守护永恒的爱2",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/737471"
-    },
-    {
-      "rank": 64,
       "name": "彩虹六号",
       "platform": "taptap",
       "link": "https://www.taptap.cn/app/726271"
     },
     {
+      "rank": 18,
+      "name": "望月",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/386208"
+    },
+    {
+      "rank": 19,
+      "name": "代号：城中村（TapTap测试版）",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/871551"
+    },
+    {
+      "rank": 20,
+      "name": "舒舒服服小岛时光",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/729276"
+    },
+    {
+      "rank": 21,
+      "name": "代号：梦核（TapTap测试版）",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/817406"
+    },
+    {
+      "rank": 22,
+      "name": "幻兽帕鲁世界",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/899001"
+    },
+    {
+      "rank": 23,
+      "name": "伊莫",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/748031"
+    },
+    {
+      "rank": 24,
+      "name": "魂坠深境",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/760944"
+    },
+    {
+      "rank": 25,
+      "name": "王者万象棋",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/243110"
+    },
+    {
+      "rank": 26,
+      "name": "无限大",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/383874"
+    },
+    {
+      "rank": 27,
+      "name": "绿梦：时空之声",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/237561"
+    },
+    {
+      "rank": 28,
+      "name": "奶茶店模拟器——重生之我在冰堡甜城当店长",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/779303"
+    },
+    {
+      "rank": 29,
+      "name": "约定之日",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/387285"
+    },
+    {
+      "rank": 30,
+      "name": "七界梦谭",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/611414"
+    },
+    {
+      "rank": 31,
+      "name": "应征入伍",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/876286"
+    },
+    {
+      "rank": 32,
+      "name": "苏丹的游戏",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/866366"
+    },
+    {
+      "rank": 33,
+      "name": "代号：Closet",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/802014"
+    },
+    {
+      "rank": 34,
+      "name": "外婆的手账本",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/871924"
+    },
+    {
+      "rank": 35,
+      "name": "菜鸡梦想家",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/378464"
+    },
+    {
+      "rank": 36,
+      "name": "代号：微光",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/879449"
+    },
+    {
+      "rank": 37,
+      "name": "崩坏：因缘精灵",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/753921"
+    },
+    {
+      "rank": 38,
+      "name": "代号：神不言",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/849146"
+    },
+    {
+      "rank": 39,
+      "name": "凯蒂猫梦想商店",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/789293"
+    },
+    {
+      "rank": 40,
+      "name": "奥星热浪",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/767292"
+    },
+    {
+      "rank": 41,
+      "name": "绚烂花期",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/855738"
+    },
+    {
+      "rank": 42,
+      "name": "粒粒的小人国",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/772909"
+    },
+    {
+      "rank": 43,
+      "name": "纵横修仙界",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/860511"
+    },
+    {
+      "rank": 44,
+      "name": "五星好市民",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/752366"
+    },
+    {
+      "rank": 45,
+      "name": "猛兽派对",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/200818"
+    },
+    {
+      "rank": 46,
+      "name": "梦战：剑之海",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/880659"
+    },
+    {
+      "rank": 47,
+      "name": "秘境夺金",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/837841"
+    },
+    {
+      "rank": 48,
+      "name": "乌托",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/773812"
+    },
+    {
+      "rank": 49,
+      "name": "PuffPals: Island Skies",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/233809"
+    },
+    {
+      "rank": 50,
+      "name": "孤岛猎神",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/779246"
+    },
+    {
+      "rank": 51,
+      "name": "超时空街球对决",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/876579"
+    },
+    {
+      "rank": 52,
+      "name": "三国志：王道天下",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/824115"
+    },
+    {
+      "rank": 53,
+      "name": "蜡笔小新之小帮手大作战",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/724400"
+    },
+    {
+      "rank": 54,
+      "name": "遮天世界",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/343834"
+    },
+    {
+      "rank": 55,
+      "name": "万华律",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/766691"
+    },
+    {
+      "rank": 56,
+      "name": "方舟：生存进化",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/133568"
+    },
+    {
+      "rank": 57,
+      "name": "星布谷地",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/776320"
+    },
+    {
+      "rank": 58,
+      "name": "土豆兄弟",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/256335"
+    },
+    {
+      "rank": 59,
+      "name": "追迹迷城",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/716987"
+    },
+    {
+      "rank": 60,
+      "name": "代号：巫师之路",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/759959"
+    },
+    {
+      "rank": 61,
+      "name": "赛菲莉娅",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/782065"
+    },
+    {
+      "rank": 62,
+      "name": "小垠的秘密",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/863883"
+    },
+    {
+      "rank": 63,
+      "name": "只有我看见的世界",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/814605"
+    },
+    {
+      "rank": 64,
+      "name": "龙族：最后的旅行",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/769559"
+    },
+    {
       "rank": 65,
-      "name": "纤维",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/833213"
-    },
-    {
-      "rank": 66,
-      "name": "闪耀吧！噜咪",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/784122"
-    },
-    {
-      "rank": 67,
-      "name": "龙之谷：启程",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/858841"
-    },
-    {
-      "rank": 68,
-      "name": "芙娅之魂",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/737243"
-    },
-    {
-      "rank": 69,
-      "name": "异人之下",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/730674"
-    },
-    {
-      "rank": 70,
       "name": "可口的咖啡",
       "platform": "taptap",
       "link": "https://www.taptap.cn/app/741827"
     },
     {
-      "rank": 71,
-      "name": "妹居物语\n应用",
+      "rank": 66,
+      "name": "代号莲",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/782330"
+      "link": "https://www.taptap.cn/app/809354"
     },
     {
-      "rank": 72,
-      "name": "归环",
+      "rank": 67,
+      "name": "三国志将星闪耀",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/731238"
+      "link": "https://www.taptap.cn/app/749667"
     },
     {
-      "rank": 73,
-      "name": "命运代码：侵入",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/863880"
-    },
-    {
-      "rank": 74,
-      "name": "这是谐音梗",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/802533"
-    },
-    {
-      "rank": 75,
-      "name": "秩序：新曙光",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/242783"
-    },
-    {
-      "rank": 76,
-      "name": "料理人班乔",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/864393"
-    },
-    {
-      "rank": 77,
-      "name": "饼干人联盟",
-      "platform": "taptap",
-      "link": "https://www.taptap.cn/app/773516"
-    },
-    {
-      "rank": 78,
+      "rank": 68,
       "name": "荒野大镖客：救赎",
       "platform": "taptap",
       "link": "https://www.taptap.cn/app/789815"
     },
     {
-      "rank": 79,
-      "name": "北境之地",
+      "rank": 69,
+      "name": "森盒\n应用",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/202521"
+      "link": "https://www.taptap.cn/app/777514"
+    },
+    {
+      "rank": 70,
+      "name": "这是谐音梗",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/802533"
+    },
+    {
+      "rank": 71,
+      "name": "暮色大师",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/876252"
+    },
+    {
+      "rank": 72,
+      "name": "中世纪之战",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/893315"
+    },
+    {
+      "rank": 73,
+      "name": "仙境传说3",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/886599"
+    },
+    {
+      "rank": 74,
+      "name": "闪耀吧！噜咪",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/784122"
+    },
+    {
+      "rank": 75,
+      "name": "大侠闯天下",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/852992"
+    },
+    {
+      "rank": 76,
+      "name": "妹居物语\n应用",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/782330"
+    },
+    {
+      "rank": 77,
+      "name": "怪物猎人：旅人",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/243984"
+    },
+    {
+      "rank": 78,
+      "name": "集合！浆果镇",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/839552"
+    },
+    {
+      "rank": 79,
+      "name": "航海王：集结",
+      "platform": "taptap",
+      "link": "https://www.taptap.cn/app/238629"
     },
     {
       "rank": 80,
-      "name": "黑历史：献帝",
+      "name": "饼干人联盟",
       "platform": "taptap",
-      "link": "https://www.taptap.cn/app/875411"
+      "link": "https://www.taptap.cn/app/773516"
     }
   ],
   "bilibili": [
     {
       "rank": 4,
-      "name": "遗忘之海",
-      "publisher": "网易（杭州）网络有限公司",
+      "name": "白银之城",
+      "publisher": "乐元素",
       "platform": "bilibili"
     },
     {
       "rank": 5,
-      "name": "BanG Dream! Our Notes",
-      "publisher": "BILIBILI HK",
+      "name": "纵横修仙界",
+      "publisher": "极致游戏",
       "platform": "bilibili"
     },
     {
       "rank": 6,
-      "name": "拳皇全明星",
-      "publisher": "银河聚阵",
+      "name": "雾海之下",
+      "publisher": "网易游戏",
       "platform": "bilibili"
     },
     {
       "rank": 7,
-      "name": "蓝色星原：旅谣",
-      "publisher": "芒啾网络",
+      "name": "奥星热浪",
+      "publisher": "腾讯",
       "platform": "bilibili"
     },
     {
       "rank": 8,
-      "name": "崩坏：因缘精灵",
-      "publisher": "米哈游",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 9,
-      "name": "望月",
-      "publisher": "望月游戏研究院",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 10,
-      "name": "闪耀吧！噜咪",
-      "publisher": "上海幻电信息科技有限公司",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 11,
       "name": "绿梦：时空之声",
       "publisher": "上海竹子互联网信息服务有限公司",
       "platform": "bilibili"
     },
     {
-      "rank": 12,
-      "name": "星布谷地",
+      "rank": 9,
+      "name": "诡秘之主",
+      "publisher": "弹指宇宙",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 10,
+      "name": "BanG Dream! Our Notes",
+      "publisher": "BILIBILI HK",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 11,
+      "name": "崩坏：因缘精灵",
       "publisher": "米哈游",
       "platform": "bilibili"
     },
     {
+      "rank": 12,
+      "name": "诡影藏锋",
+      "publisher": "杭州网易雷火科技有限公司",
+      "platform": "bilibili"
+    },
+    {
       "rank": 13,
-      "name": "无限大",
-      "publisher": "网易游戏",
+      "name": "蓝色星原：旅谣",
+      "publisher": "芒啾网络",
       "platform": "bilibili"
     },
     {
       "rank": 14,
-      "name": "梦战：剑之海",
-      "publisher": "紫龙游戏",
+      "name": "望月",
+      "publisher": "望月游戏研究院",
       "platform": "bilibili"
     },
     {
@@ -558,131 +558,137 @@
     },
     {
       "rank": 16,
+      "name": "纸嫁衣9罗浮梦",
+      "publisher": "成都惊帆科技有限公司",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 17,
       "name": "诡秘之主（PC版）",
       "publisher": "弹指宇宙",
       "platform": "bilibili"
     },
     {
-      "rank": 17,
-      "name": "追逐卡蕾多",
-      "publisher": "深圳市腾讯计算机系统有限公司",
+      "rank": 18,
+      "name": "星回",
+      "publisher": "光焰网络",
       "platform": "bilibili"
     },
     {
-      "rank": 18,
-      "name": "诡秘之主",
-      "publisher": "弹指宇宙",
+      "rank": 19,
+      "name": "群星征途2117",
+      "publisher": "风澜游戏",
       "platform": "bilibili"
     },
     {
       "rank": 20,
-      "name": "芙娅之魂",
-      "publisher": "方尖碑工作室",
+      "name": "无限大",
+      "publisher": "网易游戏",
       "platform": "bilibili"
     },
     {
       "rank": 21,
-      "name": "奥星热浪",
-      "publisher": "腾讯",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 22,
-      "name": "诡影藏锋",
-      "publisher": "杭州网易雷火科技有限公司",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 23,
-      "name": "伊莫",
-      "publisher": "爪印工作室",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 24,
-      "name": "元夜十二谈",
-      "publisher": "上海游卡",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 25,
-      "name": "饥困荒野",
-      "publisher": "猪人工作室",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 26,
-      "name": "诡秘之主：愚者",
-      "publisher": "祖龙（天津）科技股份有限公司",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 27,
       "name": "虚环",
       "publisher": "深圳市腾讯计算机系统有限公司",
       "platform": "bilibili"
     },
     {
+      "rank": 22,
+      "name": "饥困荒野",
+      "publisher": "猪人工作室",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 23,
+      "name": "诡秘之主：愚者",
+      "publisher": "祖龙（天津）科技股份有限公司",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 24,
+      "name": "梦战：剑之海",
+      "publisher": "紫龙游戏",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 25,
+      "name": "王者万象棋",
+      "publisher": "深圳市腾讯计算机系统有限公司",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 26,
+      "name": "芙娅之魂",
+      "publisher": "方尖碑工作室",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 27,
+      "name": "追逐卡蕾多",
+      "publisher": "深圳市腾讯计算机系统有限公司",
+      "platform": "bilibili"
+    },
+    {
       "rank": 28,
-      "name": "代号：神不言",
-      "publisher": "VVANNA STUDIO",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 29,
-      "name": "镇魂街王者归来",
-      "publisher": "上海游碧曜",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 30,
-      "name": "光阴之外",
-      "publisher": "上海宾麒",
-      "platform": "bilibili"
-    },
-    {
-      "rank": 32,
       "name": "Apex英雄",
       "publisher": "EA",
       "platform": "bilibili"
     },
     {
-      "rank": 33,
-      "name": "土豆兄弟",
-      "publisher": "Erabit CN",
+      "rank": 29,
+      "name": "苍蓝避风港",
+      "publisher": "幻萌网络",
       "platform": "bilibili"
     },
     {
-      "rank": 34,
-      "name": "吞噬星空",
-      "publisher": "上海阅娱文化科技发展有限公司",
+      "rank": 30,
+      "name": "元夜十二谈",
+      "publisher": "上海游卡",
       "platform": "bilibili"
     },
     {
-      "rank": 36,
+      "rank": 31,
+      "name": "航海王：集结",
+      "publisher": "朝夕光年",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 32,
       "name": "三国火凤燎原",
       "publisher": "上海幻电信息科技有限公司",
       "platform": "bilibili"
     },
     {
-      "rank": 37,
-      "name": "异人之下",
+      "rank": 35,
+      "name": "怪物猎人：旅人",
       "publisher": "腾讯",
       "platform": "bilibili"
     },
     {
-      "rank": 38,
-      "name": "仙界大掌门",
-      "publisher": "儒意景秀",
+      "rank": 36,
+      "name": "奥特曼英雄决战",
+      "publisher": "畅乐互娱",
       "platform": "bilibili"
     },
     {
-      "rank": 39,
-      "name": "少女前线：蓝蝶契约",
-      "publisher": "上海散爆网络科技有限公司",
+      "rank": 37,
+      "name": "吞噬星空",
+      "publisher": "上海阅娱文化科技发展有限公司",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 38,
+      "name": "镇魂街王者归来",
+      "publisher": "上海游碧曜",
+      "platform": "bilibili"
+    },
+    {
+      "rank": 40,
+      "name": "异人之下",
+      "publisher": "腾讯",
       "platform": "bilibili"
     }
   ],
   "total_taptap": 80,
-  "total_bilibili": 33
+  "total_bilibili": 34
 }
