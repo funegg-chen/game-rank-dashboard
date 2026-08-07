@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年H2工作计划 — 陈茂科</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --primary: #1E40AF;
+  --primary-dark: #1E3A8A;
+  --primary-light: #3B82F6;
+  --primary-pale: #EFF6FF;
+  --accent: #F97316;
+  --accent-light: #FFF7ED;
+  --bg: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --text: #1E293B;
+  --text-secondary: #64748B;
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 15px;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 0 24px 48px; }
+
+/* ===== Hero / Cover ===== */
+.hero {
+  background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 40%, #3B82F6 100%);
+  border-radius: 0 0 24px 24px;
+  padding: 48px 40px 40px;
+  margin: 0 0 36px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 30%;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; position: relative; z-index: 1; }
+.hero .subtitle { font-size: 15px; opacity: 0.85; position: relative; z-index: 1; }
+
+/* ===== Section Title ===== */
+.section { margin-bottom: 36px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.section-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff; font-weight: 700; font-size: 16px;
+  box-shadow: 0 2px 8px rgba(30,64,175,0.25);
+  flex-shrink: 0;
+}
+.section-title {
+  font-size: 21px; font-weight: 700;
+  color: var(--primary-dark);
+}
+.sub-section-title {
+  font-size: 17px; font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary-pale);
+}
+
+/* ===== Cards ===== */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.card-blue { border-left: 4px solid var(--primary); background: var(--primary-pale); }
+
+/* ===== Metric Bar ===== */
+.metric-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+@media (max-width: 768px) { .metric-row { grid-template-columns: repeat(2, 1fr); } }
+.metric-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--primary-light);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.metric-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.metric-card.accent { border-top-color: var(--accent); }
+.metric-card.success { border-top-color: var(--success); }
+.metric-card.warning { border-top-color: var(--warning); }
+.metric-card .metric-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric-card .metric-value { font-size: 26px; font-weight: 800; color: var(--primary-dark); }
+.metric-card.accent .metric-value { color: var(--accent); }
+.metric-card.success .metric-value { color: #065F46; }
+.metric-card .metric-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* ===== Progress Bar ===== */
+.progress-wrap { margin: 20px 0 12px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+.progress-bar-outer { height: 14px; background: #E2E8F0; border-radius: 7px; overflow: hidden; }
+.progress-bar-inner { height: 100%; border-radius: 7px; transition: width 1s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 11px; color: #fff; font-weight: 600; }
+
+/* ===== Tables ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+thead th {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #fff;
+  padding: 11px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text);
+}
+tbody tr:hover { background: var(--primary-pale); }
+tbody tr:last-child td { border-bottom: none; }
+
+.tag-level { 
+  display: inline-block; padding: 2px 10px; border-radius: 20px; 
+  font-size: 12px; font-weight: 600; 
+}
+.tag-1kw { background: #FEE2E2; color: #991B1B; }
+.tag-500w { background: #FEF3C7; color: #92400E; }
+.tag-200w { background: #DBEAFE; color: #1E40AF; }
+.tag-100w { background: #D1FAE5; color: #065F46; }
+.tag-50w { background: #F3F4F6; color: #6B7280; }
+.tag-10w { background: #F3F4F6; color: #9CA3AF; }
+
+.status-badge {
+  display: inline-block; padding: 2px 10px; border-radius: 20px;
+  font-size: 12px; font-weight: 500;
+}
+.status-active { background: #D1FAE5; color: #065F46; }
+.status-testing { background: #FEF3C7; color: #92400E; }
+.status-dev { background: #DBEAFE; color: #1E40AF; }
+.status-pending { background: #F3F4F6; color: #6B7280; }
+.status-delayed { background: #FEE2E2; color: #991B1B; }
+
+/* ===== Product Cards ===== */
+.product-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 768px) { .product-cards { grid-template-columns: 1fr; } }
+.product-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--primary-light);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.product-card .prod-name { font-weight: 700; font-size: 15px; color: var(--primary-dark); margin-bottom: 6px; }
+.product-card .prod-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ===== Formula Block ===== */
+.formula-block {
+  background: linear-gradient(135deg, var(--primary-dark), #1E40AF);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 16px 0;
+  text-align: center;
+  font-size: 14px;
+  line-height: 2;
+}
+.formula-block .formula { font-weight: 700; font-size: 15px; }
+.formula-block .arrow { color: var(--accent); margin: 0 8px; font-size: 18px; }
+.formula-block .result { color: #FBBF24; font-weight: 700; }
+
+/* ===== Timeline / Steps ===== */
+.steps { display: flex; gap: 12px; margin: 16px 0; }
+.step {
+  flex: 1; text-align: center;
+  padding: 12px 8px; border-radius: var(--radius);
+  background: #fff; box-shadow: var(--shadow);
+}
+.step.active { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; }
+.step .step-num { font-weight: 800; font-size: 20px; margin-bottom: 4px; }
+.step .step-label { font-size: 12px; }
+.step.active .step-label { opacity: 0.9; }
+
+/* ===== AI Scene Cards ===== */
+.ai-group {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--primary-light);
+}
+.ai-group-title { font-weight: 700; font-size: 15px; color: var(--primary); margin-bottom: 10px; }
+.ai-group ul { padding-left: 20px; }
+.ai-group li { margin-bottom: 6px; font-size: 14px; color: var(--text); }
+
+/* ===== Insight Cards ===== */
+.insight-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--primary-light);
+}
+.insight-card h4 { font-size: 15px; color: var(--primary-dark); margin-bottom: 8px; }
+.insight-card ul { padding-left: 20px; }
+.insight-card li { margin-bottom: 5px; font-size: 14px; }
+.insight-card li::marker { color: var(--primary-light); }
+
+/* ===== Action Grid ===== */
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin: 16px 0;
+}
+@media (max-width: 768px) { .action-grid { grid-template-columns: 1fr; } }
+.action-col {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.action-col h4 { font-size: 15px; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-pale); }
+.action-col ol { padding-left: 18px; font-size: 13px; color: var(--text); line-height: 1.9; }
+
+/* ===== Highlight Box ===== */
+.highlight-box {
+  background: linear-gradient(135deg, var(--primary-dark), #1E40AF);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 20px 0;
+  color: #fff;
+}
+.highlight-box h3 { margin-bottom: 12px; font-size: 18px; }
+.highlight-box .hl-item { display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start; }
+.highlight-box .hl-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px;
+  flex-shrink: 0;
+}
+.highlight-box .hl-text { font-size: 15px; line-height: 1.7; }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: linear-gradient(135deg, var(--primary-dark), #1E40AF);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin: 32px 0 0;
+  color: #fff;
+}
+.summary-box h3 { margin-bottom: 20px; font-size: 20px; text-align: center; }
+.summary-box .sum-item { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+.summary-box .sum-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 15px; flex-shrink: 0;
+}
+.summary-box .sum-text { font-size: 15px; line-height: 1.8; }
+
+/* ===== Lesson Box ===== */
+.lesson-box {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 14px;
+  color: #92400E;
+}
+.lesson-box strong { color: #B45309; }
+
+/* ===== Link ===== */
+a { color: var(--primary-light); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== Section subtitle heavy ===== */
+.heavy-note {
+  background: var(--primary-pale);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 14px;
+  color: var(--primary-dark);
+  font-weight: 500;
+}
+
+/* ===== Chart Container ===== */
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+@media (max-width: 768px) { .chart-row { grid-template-columns: 1fr; } }
+.chart-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.chart-card h4 { font-size: 14px; color: var(--primary-dark); margin-bottom: 10px; text-align: center; }
+
+/* ===== Divider ===== */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0;
+}
+
+/* ===== Empty state ===== */
+.empty { text-align: center; padding: 20px; color: var(--text-secondary); font-size: 14px; }
+
+/* ===== Grid columns for tables side by side ===== */
+.table-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; margin: 16px 0; }
+@media (max-width: 768px) { .table-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- ===== Hero ===== -->
+<div class="hero">
+  <h1>2026年H2工作计划</h1>
+  <div class="subtitle">陈茂科 · 游戏广告销售 · 2026年8月</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SECTION 1: H1完成情况 -->
+<!-- ================================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">1</span>
+    <span class="section-title">H1完成情况</span>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-label">H1总毛利</div>
+      <div class="metric-value">456.90<span style="font-size:14px;">万</span></div>
+      <div class="metric-sub">信息流390.3万 + 星广66.58万 + 订单0.68万</div>
+    </div>
+    <div class="metric-card accent">
+      <div class="metric-label">年度目标</div>
+      <div class="metric-value">1,300<span style="font-size:14px;">万</span></div>
+      <div class="metric-sub">H2需完成843.10万</div>
+    </div>
+    <div class="metric-card warning">
+      <div class="metric-label">年度完成率</div>
+      <div class="metric-value">35.1<span style="font-size:14px;">%</span></div>
+      <div class="metric-sub">H2月均140.52万</div>
+    </div>
+    <div class="metric-card success">
+      <div class="metric-label">Q2完成率</div>
+      <div class="metric-value">71<span style="font-size:14px;">%</span></div>
+      <div class="metric-sub">Q2毛利171万，目标240万</div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>H1实际：456.90万</span><span>年度目标：1300万（35.1%）</span></div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" style="width:35.1%;background:linear-gradient(90deg,#3B82F6,#1E40AF);">35.1%</div>
+    </div>
+  </div>
+
+  <div class="heavy-note">
+    ⚠️ <strong>H2压力：</strong>H2需完成 <strong style="color:#F97316;">843.10万</strong>，月均需 <strong>140.52万</strong>，是H1月均（76.15万）的 <strong>1.85倍</strong>。上半场跑得不够快，但方向是对的；下半场节奏要翻倍。
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card">
+      <h4>H1毛利业务构成</h4>
+      <div style="height:220px;position:relative;"><canvas id="pieChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>Q1 vs Q2 毛利对比（万）</h4>
+      <div style="height:220px;position:relative;"><canvas id="barChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SECTION 2: 已接入项目情况（基础盘） -->
+<!-- ================================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">2</span>
+    <span class="section-title">已接入项目情况（基础盘）</span>
+  </div>
+
+  <!-- 2.1 存量重点产品 -->
+  <h3 class="sub-section-title">2.1 存量重点产品</h3>
+
+  <div class="table-grid">
+    <!-- 常规代投 -->
+    <div>
+      <table>
+        <thead><tr><th colspan="4" style="text-align:center;">常规代投</th></tr></thead>
+        <thead><tr><th>厂商</th><th>产品</th><th>量级预估</th><th>投放媒体</th></tr></thead>
+        <tbody>
+          <tr><td>景秀</td><td>仙界大掌门</td><td><span class="tag-level tag-500w">500万</span></td><td>头条、腾讯、B站</td></tr>
+          <tr><td>沐瞳</td><td>潮汐守望者</td><td><span class="tag-level tag-100w">100万</span></td><td>头条、快手</td></tr>
+          <tr><td>乐元素</td><td>开心消消乐</td><td><span class="tag-level tag-100w">100万</span></td><td>小红书</td></tr>
+          <tr><td>巨人</td><td>球球大作战</td><td><span class="tag-level tag-100w">100万</span></td><td>头条</td></tr>
+          <tr><td>巨人</td><td>名将杀</td><td><span class="tag-level tag-200w">400万</span></td><td>头条、快手、B站、星广</td></tr>
+          <tr style="background:#FEF3C7;font-weight:600;"><td>巨人</td><td>超自然行动组</td><td><span class="tag-level tag-1kw">5000万</span></td><td>全媒体（除爱奇艺不投）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- 存量星广 -->
+    <div>
+      <table>
+        <thead><tr><th colspan="3" style="text-align:center;">存量星广</th></tr></thead>
+        <thead><tr><th>厂商</th><th>产品</th><th>量级预估</th></tr></thead>
+        <tbody>
+          <tr><td>浩凡</td><td>闪光宝可梦</td><td><span class="tag-level tag-50w">50万</span></td></tr>
+          <tr style="background:#FEF3C7;font-weight:600;"><td>巨人</td><td>超自然行动组-执单，名将杀</td><td><span class="tag-level tag-1kw">1000万</span></td></tr>
+          <tr style="font-weight:600;"><td>海彼</td><td>冒险者日记，弓箭传说2，冒险法则，弹壳特攻队</td><td><span class="tag-level tag-500w">500万</span></td></tr>
+          <tr><td>巨人</td><td>名将杀-app</td><td><span class="tag-level tag-200w">200万</span></td></tr>
+          <tr><td>乐牛</td><td>灵妖劫</td><td><span class="tag-level tag-50w">50万</span></td></tr>
+          <tr><td>景秀</td><td>仙界大掌门</td><td><span class="tag-level tag-200w">200万</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2.2 Q3增量提升产品 -->
+  <h3 class="sub-section-title" style="margin-top:24px;">2.2 Q3增量提升产品</h3>
+
+  <div class="product-cards">
+    <div class="product-card">
+      <div class="prod-name">超自然行动组 + 名将杀 <span class="tag-level tag-1kw">亿级</span></div>
+      <div class="prod-desc">暑假档期消耗稳步拉升，预计 Q3 巨人消耗贡献 <strong style="color:#F97316;">6000万级增量</strong>。</div>
+    </div>
+    <div class="product-card">
+      <div class="prod-name">仙界大掌门 <span class="tag-level tag-500w">景秀·800万级</span></div>
+      <div class="prod-desc">7月底公测，投放预计持续整个Q3，8月底新增小游戏买量。是Q3最大单一增量来源，公测首月预算与消耗占比重点跟踪。</div>
+    </div>
+    <div class="product-card">
+      <div class="prod-name">代号：三川 <span class="tag-level tag-1kw">千万级</span></div>
+      <div class="prod-desc">景秀新发产品，Q3有起飞首爆、内侧等预算，其中三川预算 <strong>150万</strong>。</div>
+    </div>
+    <div class="product-card">
+      <div class="prod-name">拳皇全明星 <span class="tag-level tag-1kw">千万级</span></div>
+      <div class="prod-desc">网石新产品，已接入，含起飞首爆、内侧等预算。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SECTION 3: 2026年H2重点产品（增长点） -->
+<!-- ================================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">3</span>
+    <span class="section-title">2026年 H2 —— 从哪里要增长</span>
+  </div>
+
+  <table>
+    <thead><tr><th>序号</th><th>厂商</th><th>产品</th><th>预估预算级别</th><th>预计上线</th><th>产品节奏</th></tr></thead>
+    <tbody>
+      <tr style="font-weight:600;"><td>1</td><td>景秀</td><td>魔法门</td><td><span class="tag-level tag-100w">百万</span></td><td>待定</td><td><span class="status-badge status-testing">已参与内测</span></td></tr>
+      <tr style="font-weight:600;background:#FEF3C7;"><td>2</td><td>景秀</td><td>代号：三川</td><td><span class="tag-level tag-1kw">千万</span></td><td>9月出</td><td><span class="status-badge status-dev">研发中</span></td></tr>
+      <tr><td>3</td><td>景秀</td><td>饼干人联盟</td><td><span class="tag-level tag-100w">百万</span></td><td>待定</td><td><span class="status-badge status-delayed">延期</span></td></tr>
+      <tr><td>4</td><td>景秀</td><td>仙境传说：初心</td><td><span class="tag-level tag-100w">百万</span></td><td>待定</td><td><span class="status-badge status-delayed">延期</span></td></tr>
+      <tr><td>5</td><td>沐瞳</td><td>代号：Lovania</td><td><span class="tag-level tag-100w">百万</span></td><td>Q4</td><td><span class="status-badge status-dev">研发中</span></td></tr>
+      <tr><td>6</td><td>咪咕</td><td>中职篮：全力以赴</td><td><span class="tag-level tag-100w">百万</span></td><td>待定</td><td><span class="status-badge status-active">预计Q3启动投放</span></td></tr>
+      <tr style="font-weight:600;background:#FEF3C7;"><td>7</td><td>网石</td><td>拳皇</td><td><span class="tag-level tag-1kw">千万</span></td><td>Q3</td><td><span class="status-badge status-testing">内测</span></td></tr>
+      <tr style="font-weight:600;background:#FEF3C7;"><td>8</td><td>巨人</td><td>五千年</td><td><span class="tag-level tag-1kw">千万</span></td><td>25年底或26年</td><td><span class="status-badge status-testing">每月参与产品内测</span></td></tr>
+      <tr><td>9</td><td>乐推</td><td>荒野小分队</td><td><span class="tag-level tag-100w">百万</span></td><td>26年</td><td><span class="status-badge status-active">跟进各媒体代投需求</span></td></tr>
+      <tr><td>10</td><td>心动网络</td><td>RO2</td><td><span class="tag-level tag-100w">百万</span></td><td>年底</td><td><span class="status-badge status-pending">预计Q4</span></td></tr>
+      <tr><td>11</td><td>幻踌网络</td><td>约定之日</td><td><span class="tag-level tag-100w">百万</span></td><td>9月预约</td><td><span class="status-badge status-dev">研发中</span></td></tr>
+      <tr><td>12</td><td>原力棱镜</td><td>迷失</td><td><span class="tag-level tag-100w">百万</span></td><td>9月</td><td><span class="status-badge status-testing">测试</span></td></tr>
+      <tr><td>13</td><td>十勇士</td><td>大圣牌凌霄斗神</td><td><span class="tag-level tag-10w">10万</span></td><td>10月</td><td><span class="status-badge status-pending">客户市场调研中</span></td></tr>
+      <tr><td>14</td><td>水墨侠道</td><td>八紘之外</td><td><span class="tag-level tag-100w">百万</span></td><td>10月</td><td><span class="status-badge status-dev">研发中</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="card card-blue" style="margin-top:16px;">
+    <strong>拓新方向：</strong>首发项目（内容营销+内容加热+首发代投+星广）。增量媒体：<strong>B站、小红书</strong>。重点增量板块：代投、星广、达人。优先级产品：拳皇、代号：三川、饼干人联盟、约定之日。
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SECTION 4: 客户渗透行动 -->
+<!-- ================================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">4</span>
+    <span class="section-title">客户渗透行动</span>
+  </div>
+
+  <!-- 4.1 -->
+  <div class="card">
+    <h3 class="sub-section-title">4.1 渗透的目标是什么？</h3>
+    <div class="formula-block">
+      <span class="formula">客户媒体板块合作深度</span>
+      <span class="arrow">+</span>
+      <span class="formula">客户产品媒体消耗占比</span>
+      <span class="arrow">=</span>
+      <span class="result">在客户的总消耗盘子里，提升我方代理的占比</span>
+    </div>
+  </div>
+
+  <!-- 4.2 -->
+  <div class="card" style="margin-top:16px;">
+    <h3 class="sub-section-title">4.2 渗透背后细分维度有哪些？</h3>
+    <p style="font-size:14px;color:var(--text-secondary);margin-bottom:12px;">渗透率不是拍脑袋定的结果，它由六个变量共同作用——任何一个短板都会拖低整体效果：</p>
+    <div class="formula-block">
+      <span class="formula">内部卡点处理</span><span class="arrow">+</span>
+      <span class="formula">投放精力投入</span><span class="arrow">+</span>
+      <span class="formula">产品大盘了解</span><span class="arrow">+</span>
+      <span class="formula">媒体支持</span><span class="arrow">+</span>
+      <span class="formula">客户支持</span><span class="arrow">+</span>
+      <span class="formula">友商动态</span>
+      <span class="arrow">→</span>
+      <span class="result">渗透率</span>
+    </div>
+  </div>
+
+  <!-- 4.3 -->
+  <div class="card" style="margin-top:16px;">
+    <h3 class="sub-section-title">4.3 Q3重点要做哪些客户的渗透</h3>
+
+    <table style="margin-top:12px;">
+      <thead><tr><th>客户</th><th>重点产品</th><th>量级</th><th>Q3策略</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5" style="font-weight:700;color:var(--primary-dark);">巨人</td><td>超自然行动组</td><td><span class="tag-level tag-1kw">亿级</span></td><td rowspan="5" style="font-size:13px;">优先提升合作深度，新增产品线接入；Q4在已接入产品上重点提升消耗占比</td></tr>
+        <tr><td>名将杀</td><td><span class="tag-level tag-1kw">千万级</span></td></tr>
+        <tr><td>五千年</td><td><span class="tag-level tag-1kw">千万级</span></td></tr>
+        <tr><td>球球大作战</td><td><span class="tag-level tag-100w">百万级</span></td></tr>
+        <tr><td>征途</td><td><span class="tag-level tag-pending">待评估</span></td></tr>
+        <tr><td rowspan="3" style="font-weight:700;color:var(--primary-dark);">景秀</td><td>仙界大掌门</td><td><span class="tag-level tag-500w">800万级</span></td><td rowspan="3" style="font-size:13px;">Q3新增产品线接入</td></tr>
+        <tr><td>代号：三川</td><td><span class="tag-level tag-1kw">千万级</span></td></tr>
+        <tr><td>仙境传说：初心</td><td><span class="tag-level tag-100w">百万级</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4.4 百人拜访 -->
+  <div class="card" style="margin-top:16px;">
+    <h3 class="sub-section-title">4.4 行动计划：对外</h3>
+    <div style="display:flex;align-items:center;gap:16px;margin:16px 0;">
+      <div style="width:140px;text-align:center;">
+        <div style="position:relative;width:120px;height:120px;margin:0 auto;border-radius:50%;background:conic-gradient(#1E40AF 0deg 255.6deg, #E2E8F0 255.6deg 360deg);display:flex;align-items:center;justify-content:center;">
+          <div style="width:90px;height:90px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+            <div style="font-size:26px;font-weight:800;color:#1E40AF;">71</div>
+            <div style="font-size:11px;color:#64748B;">/ 100人</div>
+          </div>
+        </div>
+        <div style="margin-top:4px;font-weight:700;color:#1E40AF;">百人拜访挑战计划</div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:13px;line-height:2;">
+          📄 <a href="https://donsontech.feishu.cn/wiki/Zd4ddtoUnonnN5xarMkcy7nVnbW" target="_blank" style="font-weight:600;">《2026，百人拜访挑战计划》</a><br>
+          <strong style="color:var(--primary);">拜访标准：</strong>有项目产品、有业务交集（跑会加微信不再联系的不算）<br>
+          <strong style="color:var(--primary);">验收标准：</strong>每家客户形成《沟通纪要》，明确跟进事项并发送汇报给领导
+        </div>
+        <div class="steps" style="margin-top:12px;">
+          <div class="step" style="background:#EFF6FF;"><div class="step-num">40+</div><div class="step-label">Q2已完成</div></div>
+          <div class="step active"><div class="step-num">71个</div><div class="step-label">截止7月底</div></div>
+          <div class="step"><div class="step-num">85+</div><div class="step-label">Q3目标</div></div>
+          <div class="step"><div class="step-num">100+</div><div class="step-label">Q4收官</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4.5 行动：对内 -->
+  <div class="card" style="margin-top:16px;">
+    <h3 class="sub-section-title">4.5 行动：对内</h3>
+    <div class="action-grid">
+      <div class="action-col">
+        <h4>方向</h4>
+        <ol>
+          <li>给运营同步媒体方向</li>
+          <li>给运营同步客户方向</li>
+          <li>给运营同步产品节点</li>
+        </ol>
+      </div>
+      <div class="action-col">
+        <h4>支持</h4>
+        <ol>
+          <li>协助运营、助理解决沟通问题</li>
+          <li>协助解决内部卡点问题</li>
+          <li>实际准确了解运营存在问题</li>
+          <li>关注运营精力分配问题</li>
+        </ol>
+      </div>
+      <div class="action-col">
+        <h4>执行</h4>
+        <ol>
+          <li>让运营自己梳理需解决的问题</li>
+          <li>跟进量化执行反馈，跟进客户要求执行落地时效</li>
+        </ol>
+      </div>
+    </div>
+    <div class="lesson-box">
+      <strong>经验教训：</strong>过度的参与会让投放设计存在较大的压力，需要注意表达方式。
+    </div>
+  </div>
+
+  <!-- 4.6 半年度行动收获与方法纠偏 -->
+  <div class="card" style="margin-top:16px;">
+    <h3 class="sub-section-title">4.6 半年度行动收获与方法纠偏</h3>
+
+    <div class="insight-card" style="margin-top:12px;">
+      <h4>a. 行业关系提升</h4>
+      <ul>
+        <li><strong>媒体：</strong>B站直客关系较大提升，字节、小红书媒体关系增长</li>
+        <li><strong>客户：</strong>沐瞳、景秀、巨人客户关系增长</li>
+        <li><strong>友商：</strong>多盟、SNK、天拓、微盟友商关系提升</li>
+      </ul>
+    </div>
+
+    <div class="insight-card">
+      <h4>b. 行业了解分享</h4>
+      <ul>
+        <li><strong>媒体趋势：</strong>头条、B站以「精品发行、买量、小游戏」三维度划分，以服务增量为主，新开为辅</li>
+        <li><strong>友商动态：</strong>以做消耗渗透为主、做毛利为核心，也在寻找增长方向，割掉不赚钱的方向</li>
+        <li><strong>媒体政策：</strong>头条对AIGC素材有较大支持，即梦、IA明星等素材有隐藏扶持。星广已是存量板块。B站、快手重点想在小游戏做增量。小红书重点做女性向和大DAU游戏</li>
+        <li><strong>客户方向：</strong>非常关注AI。客户对代理来访整体更友好开放，同时越来越关注媒体政策变化——这是我们建立信息差优势的窗口</li>
+      </ul>
+    </div>
+
+    <div class="card card-blue">
+      <strong>总结：</strong>
+      <ul style="margin-top:8px;padding-left:18px;font-size:14px;line-height:2.1;">
+        <li><strong>百人拜访计划切实带来了行业关系和业务知识的增长，将继续坚定执行。</strong></li>
+        <li>在客户项目中的投入，目标是形成利益共同体——<strong>既能接到项目，也能做好项目。</strong>对于低价值的项目和存在风险的客户应该大胆舍弃，短期失去的机会换来的是个人和团队稳定增长的保障。</li>
+        <li><strong>个人发展方向：</strong>以精品发行项目为主要业务增长方向，做内容营销、内容加热、信息流代投（内测、公测、常规买量）</li>
+        <li><strong>行动方式：</strong>继续完成百人拜访计划，开拓精品游戏公测类型项目</li>
+        <li><strong>行动目标：</strong>H2接入至少6款首发产品项目，至少3款从产品首爆开始深度介入，渗透合作精品产品生命线全预算板块</li>
+        <li><strong>经验教训：</strong>过度的参与会让投放设计存在较大的压力，需要注意表达方式</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ================================================================ -->
+<!-- SECTION 5: AI 思考 -->
+<!-- ================================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5</span>
+    <span class="section-title">关于AI的思考 —— 新机会</span>
+  </div>
+
+  <!-- 5.1 -->
+  <div class="card">
+    <h3 class="sub-section-title">5.1 AI 如何赋能销售工作</h3>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">当前已经在用的几个场景：</p>
+
+    <div class="ai-group">
+      <div class="ai-group-title">🔍 情报效率</div>
+      <ul>
+        <li>拜访前用 AI 快速梳理客户产品动态（上线节奏、竞品投放情况、媒体政策变化），把原来要花半天查资料的时间压缩到 30 分钟</li>
+        <li>比如见景秀前，可以快速了解仙界大掌门公测数据表现、同类仙侠产品的投放策略，带着洞察去聊，而不是带着问题去问。比如聊素材策略</li>
+        <li>行业信息经 AI 处理去发现新商机：<a href="https://funegg-chen.github.io/game-rank-dashboard/" target="_blank">🎮 游戏预约榜监控仪表盘</a></li>
+      </ul>
+    </div>
+
+    <div class="ai-group">
+      <div class="ai-group-title">📝 方案效率</div>
+      <ul>
+        <li>基于已有方案和数据快速输出客户方案。
+          <a href="https://donsontech.feishu.cn/wiki/MR9ewVUpuiXI6skCBSCcm8gynnd" target="_blank">📄《开心消消乐》小红书媒体广告投放方案</a>
+        </li>
+        <li>把媒体 PPT 提取关键信息结论输出给客户。
+          <a href="https://donsontech.feishu.cn/wiki/TdQVwAknxiJTrekSOCtcM5agnff" target="_blank">📄 2026·游戏产品B站宣发策略方案参考</a>
+          <a href="https://donsontech.feishu.cn/wiki/R4Bcw3q2GiG0i2kVOilcBQGSnMe" target="_blank">📄 游戏-超级玩家活动收集分析</a>
+        </li>
+        <li>行业信息经 AI 处理后给客户想要的答案，提高客户理解效率和自己学习能力</li>
+      </ul>
+    </div>
+
+    <div class="ai-group">
+      <div class="ai-group-title">⚙️ 流程效率</div>
+      <ul>
+        <li>H1 的数据分析已经尝试用 AI 辅助——多表合并、多维度拆解、可视化报告生成。<strong>（我领导用的更6）</strong></li>
+        <li>百人拜访计划过程中，零散的记录纪要，让 AI 整理纪要、提取待办</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="card" style="margin-top:16px;">
+    <h3 class="sub-section-title">5.2 业务层面：AI 素材制作平台的商业化</h3>
+
+    <div class="insight-card" style="margin-top:12px;">
+      <h4>市场机会</h4>
+      <p style="font-size:14px;">头条/巨量对 AIGC 素材有明显的流量倾斜，即梦、IA 明星等 AI 素材在投放端有隐藏扶持。媒体在推，但客户端的 AI 素材生产能力参差不齐，已诞生外采和购买AI平台的需求。和纯 AI 工具公司不同，我们本身在做游戏广告投放，知道什么样的素材跑量好、什么样的素材客户愿意买单。这个<strong>「广告投放 know-how + AI 生产能力」</strong>的组合，是纯技术公司不具备的。这也和我的精品发行方向一致。</p>
+    </div>
+
+    <div class="insight-card">
+      <h4>客户验证与行动路径</h4>
+      <p style="font-size:14px;">现有的客户关系可以直接转化：已调研景秀、沐瞳、浩凡、赫德时代等客户，均存在<strong style="color:#F97316;">明确使用刚需</strong>。既是业务接触的入口，也是业绩增长的出口。</p>
+      <p style="font-size:14px;margin-top:8px;"><strong>短期：</strong>对存量客户试点——仙界大掌门等项目上，跟客户同频研究AI素材打法，跑出消耗数据后包装成功方法论复制到其他客户做渗透提升。<strong>不只是「卖素材」，而是「AI 素材 + 投放策略」的整合服务。</strong></p>
+    </div>
+
+    <div class="insight-card">
+      <h4>H2 意义与个人成长</h4>
+      <p style="font-size:14px;">843.10 万毛利目标，压力是很大的。AI（素材+售卖）有可能成为代投和星广之外的<strong style="color:#F97316;">第三条增长曲线</strong>。</p>
+      <p style="font-size:14px;margin-top:8px;">2026 年我的 AI 学习计划：至少熟练使用 5 个 AI 平台工具、熟练使用智影等主流 AIGC 工具，理解 prompt 工程基础，既能自己做 AI 素材，也能用龙虾等 AI 工具整体提升办公效率。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ================================================================ -->
+<!-- SECTION 6: 总结 -->
+<!-- ================================================================ -->
+<div class="summary-box">
+  <h3>三句话总结：2026年完成目标的机会与方向</h3>
+  <div class="sum-item">
+    <div class="sum-num">1</div>
+    <div class="sum-text">先守住存量，再找增量，最后用渗透把客户做深。</div>
+  </div>
+  <div class="sum-item">
+    <div class="sum-num">2</div>
+    <div class="sum-text">通过量化行动提高执行力，通过拆分渗透目标去推导行动方向。</div>
+  </div>
+  <div class="sum-item">
+    <div class="sum-num">3</div>
+    <div class="sum-text">拥抱 AI 带来的业务赋能能力和业务发展机会。</div>
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- ===== Charts ===== -->
+<script>
+// Pie Chart
+const pieCtx = document.getElementById('pieChart').getContext('2d');
+new Chart(pieCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['信息流代投 390.3万', '星广联投 66.58万', '订单收入 0.68万'],
+    datasets: [{
+      data: [390.3, 66.58, 0.68],
+      backgroundColor: ['#1E40AF', '#3B82F6', '#93C5FD'],
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyleWidth: 8 } } }
+  }
+});
+
+// Bar Chart
+const barCtx = document.getElementById('barChart').getContext('2d');
+new Chart(barCtx, {
+  type: 'bar',
+  data: {
+    labels: ['精准营销', '星广联投', '订单'],
+    datasets: [
+      { label: 'Q1', data: [0, 0, 0], backgroundColor: '#93C5FD' },
+      { label: 'Q2', data: [0, 0, 0], backgroundColor: '#1E40AF' },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' } },
+    scales: { y: { beginAtZero: true } }
+  }
+});
+</script>
+
+</body>
+</html>
